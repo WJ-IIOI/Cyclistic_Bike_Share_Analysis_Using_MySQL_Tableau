@@ -7,24 +7,26 @@
 -- end_station total 892742
 -- end_lat, end_lng total 5858
 -- 7.672 sec duration
-SELECT COUNT(*) - COUNT(ride_id) ride_id,
- COUNT(*) - COUNT(rideable_type) rideable_type,
- COUNT(*) - COUNT(started_at) started_at,
- COUNT(*) - COUNT(ended_at) ended_at,
- COUNT(*) - COUNT(start_station_name) start_station_name,
- COUNT(*) - COUNT(start_station_id) start_station_id,
- COUNT(*) - COUNT(end_station_name) end_station_name,
- COUNT(*) - COUNT(end_station_id) end_station_id,
- COUNT(*) - COUNT(start_lat) start_lat,
- COUNT(*) - COUNT(start_lng) start_lng,
- COUNT(*) - COUNT(end_lat) end_lat,
- COUNT(*) - COUNT(end_lng) end_lng,
- COUNT(*) - COUNT(member_casual) member_casual
+SELECT 
+	COUNT(*) - COUNT(ride_id) ride_id,
+	COUNT(*) - COUNT(rideable_type) rideable_type,
+	COUNT(*) - COUNT(started_at) started_at,
+	COUNT(*) - COUNT(ended_at) ended_at,
+	COUNT(*) - COUNT(start_station_name) start_station_name,
+	COUNT(*) - COUNT(start_station_id) start_station_id,
+	COUNT(*) - COUNT(end_station_name) end_station_name,
+	COUNT(*) - COUNT(end_station_id) end_station_id,
+	COUNT(*) - COUNT(start_lat) start_lat,
+	COUNT(*) - COUNT(start_lng) start_lng,
+	COUNT(*) - COUNT(end_lat) end_lat,
+	COUNT(*) - COUNT(end_lng) end_lng,
+	COUNT(*) - COUNT(member_casual) member_casual
 FROM `trip_2022`;
 
 -- OR use sum(isnull()) to count total null values
 -- 9.5 sec duration
-SELECT sum(isnull(ride_id)) ride_id,
+SELECT 
+	sum(isnull(ride_id)) ride_id,
 	sum(isnull(rideable_type)) rideable_type,
     sum(isnull(started_at)) started_at,
     sum(isnull(ended_at)) ended_at,
@@ -35,7 +37,7 @@ SELECT sum(isnull(ride_id)) ride_id,
     sum(isnull(start_lat)) start_lat,
     sum(isnull(start_lng)) start_lng,
     sum(isnull(end_lat)) end_lat,
-    sum(isnull(end_lng)) end_lng,
+   	sum(isnull(end_lng)) end_lng,
     sum(isnull(member_casual)) member_casual
 FROM `trip_2022`;
 
@@ -45,9 +47,9 @@ FROM `trip_2022`;
 -- end_lat, end_lng total 5858
 SELECT 
 	start_station_name,
-    start_station_id
+    start_station_id,
 	end_station_name, 
-    end_station_id
+    end_station_id,
     end_lat,
 	end_lng
 FROM trip_2022
@@ -56,7 +58,7 @@ WHERE
     start_station_id is NULL AND
 	end_station_name is NULL AND
     end_station_id is NULL AND
-    end_lat is NULL AND
+	end_lat is NULL AND
     end_lng is NULL;
     
 
@@ -95,13 +97,13 @@ SELECT
 FROM trip_2022
 WHERE 
 	timediff(ended_at, started_at) > TIME('24:00:00')
-    OR timediff(ended_at, started_at) < TIME('00:01:00')
-    ORDER BY 1 DESC;
+    	OR timediff(ended_at, started_at) < TIME('00:01:00')
+ORDER BY 1 DESC;
 
 
 -- Checking for duplicate rows
 SELECT 
-   -- COUNT(DISTINCT ride_id) AS unique_ride_id,
+   	-- COUNT(DISTINCT ride_id) AS unique_ride_id,
     COUNT(ride_id) - COUNT(DISTINCT ride_id) AS duplicate_rows
 FROM `trip_2022`;
 
@@ -132,7 +134,7 @@ SELECT timediff(ended_at, started_at), end_lat, end_lng
 FROM trip_2022
 WHERE (timediff(ended_at, started_at) > TIME('24:00:00') 
 	OR timediff(ended_at, started_at) < TIME('00:01:00'))
-    AND (end_lat IS NULL AND end_lng IS NULL)
+    	AND (end_lat IS NULL AND end_lng IS NULL)
 ORDER BY 1;
 
 
@@ -143,3 +145,4 @@ SELECT
     count(*) / (SELECT COUNT(*) FROM trip_2022) AS percentage
 FROM trip_2022
 GROUP BY member_casual;
+
