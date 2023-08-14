@@ -21,7 +21,7 @@ SELECT
 	COUNT(*) - COUNT(end_lat) end_lat,
 	COUNT(*) - COUNT(end_lng) end_lng,
 	COUNT(*) - COUNT(member_casual) member_casual
-FROM `trip_2022`;
+FROM trip_2022;
 
 -- OR use sum(isnull()) to count total null values
 -- 9.5 sec duration
@@ -39,7 +39,7 @@ SELECT
 	sum(isnull(end_lat)) end_lat,
 	sum(isnull(end_lng)) end_lng,
 	sum(isnull(member_casual)) member_casual
-FROM `trip_2022`;
+FROM trip_2022;
 
 -- Checking for the null values of start_station name and id whether same
 -- start_station total 833064
@@ -103,11 +103,11 @@ ORDER BY 1 DESC;
 SELECT 
    	-- COUNT(DISTINCT ride_id) AS unique_ride_id,
     COUNT(ride_id) - COUNT(DISTINCT ride_id) AS duplicate_rows
-FROM `trip_2022`;
+FROM trip_2022;
 
 -- ride_id - all have length of 16
 SELECT LENGTH(ride_id) AS length_ride_id
-FROM `trip_2022`
+FROM trip_2022
 GROUP BY length_ride_id;
 
 
