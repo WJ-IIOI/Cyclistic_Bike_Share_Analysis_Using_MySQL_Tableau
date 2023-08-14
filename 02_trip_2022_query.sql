@@ -134,7 +134,7 @@ SELECT timediff(ended_at, started_at), end_lat, end_lng
 FROM trip_2022
 WHERE (timediff(ended_at, started_at) > TIME('24:00:00') 
 	OR timediff(ended_at, started_at) < TIME('00:01:00'))
-    	AND (end_lat IS NULL AND end_lng IS NULL)
+    AND (end_lat IS NULL AND end_lng IS NULL)
 ORDER BY 1;
 
 
