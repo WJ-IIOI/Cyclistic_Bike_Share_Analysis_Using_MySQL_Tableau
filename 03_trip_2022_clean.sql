@@ -24,13 +24,13 @@ CREATE TABLE IF NOT EXISTS bike_share_2023_07.trip_2022_cleaned AS (SELECT ride_
     bike_share_2023_07.trip_2022
 WHERE
     start_station_name IS NOT NULL
-        AND start_station_id IS NOT NULL
-        AND end_station_id IS NOT NULL
-        AND end_station_id IS NOT NULL
-        AND end_lat IS NOT NULL
-        AND end_lng IS NOT NULL
-        AND TIMEDIFF(ended_at, started_at) < TIME('24:00:00')
-        AND TIMEDIFF(ended_at, started_at) > TIME('00:01:00'));   
+    AND start_station_id IS NOT NULL
+    AND end_station_id IS NOT NULL
+    AND end_station_id IS NOT NULL
+    AND end_lat IS NOT NULL
+    AND end_lng IS NOT NULL
+    AND TIMEDIFF(ended_at, started_at) < TIME('24:00:00')
+    AND TIMEDIFF(ended_at, started_at) > TIME('00:01:00'));   
 
 -- Total 4921805 rows clean data for analysis
 SELECT count(*) FROM trip_2022_cleaned;
