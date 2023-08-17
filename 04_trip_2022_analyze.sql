@@ -147,8 +147,11 @@ UNION ALL SELECT
     start_station_name, AVG(start_lat), AVG(start_lng)
 FROM
     trip_2022_cleaned
-GROUP BY start_station_name INTO OUTFILE 'F:/CS/01_Data_analysis/03_Project/01_bike_share_20230725/01data/trip_2022_lat_lng_cleaned.csv' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '
-'
+GROUP BY start_station_name 
+INTO OUTFILE 'F:/CS/01_Data_analysis/03_Project/01_bike_share_20230725/01data/trip_2022_lat_lng_cleaned.csv' 
+FIELDS TERMINATED BY ',' 
+OPTIONALLY ENCLOSED BY '"' 
+LINES TERMINATED BY ''
 ;
 
 SELECT 
