@@ -31,7 +31,7 @@ ORDER BY 3 DESC;
 
 -- Per ride_length of member_casual
 SELECT 
-    max(ride_length) AS max_len,
+	max(ride_length) AS max_len,
     min(ride_length) AS min_len,
     avg(ride_length) / 60 AS avg_ride_length
 FROM trip_2022_cleaned;
@@ -75,7 +75,7 @@ ORDER BY 1, 2
 
 -- caculate total users and avg_ride_length of every hour
 SELECT
-    extract(hour from started_at) AS hour,
+	extract(hour from started_at) AS hour,
     member_casual,
     count(*) AS users,
     round(avg(ride_length) / 60, 2) AS avg_ride_length
