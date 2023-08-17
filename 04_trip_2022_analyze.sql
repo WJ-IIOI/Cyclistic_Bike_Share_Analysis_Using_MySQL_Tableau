@@ -101,9 +101,9 @@ ORDER BY 2 DESC
 -- end_lat, end_lng total 5858
 SELECT 
 	start_station_name,
-    -- start_station_id
-	end_station_name, 
-    -- end_station_id
+    -- start_station_id,
+    end_station_name, 
+    -- end_station_id,
     start_lat,
     start_lng,
     end_lat,
@@ -111,10 +111,10 @@ SELECT
 FROM trip_2022_cleaned
 WHERE 
 	start_station_name is NULL
-	AND start_lat = 41.7900
+    AND start_lat = 41.7900
     AND start_lng = -87.6;
     -- start_station_id is NULL
-	-- end_station_name is NULL AND
+    -- end_station_name is NULL AND
     -- end_station_id is NULL AND
     -- end_lat is NULL AND
     -- end_lng is NULL;
@@ -137,8 +137,8 @@ SELECT
 UNION ALL
 SELECT 
 	start_station_name,
-	avg(start_lat),
-	avg(start_lng)
+    avg(start_lat),
+    avg(start_lng)
 FROM trip_2022_cleaned
 GROUP BY start_station_name
 INTO OUTFILE 
@@ -149,7 +149,7 @@ LINES TERMINATED BY '\n'
 
 SELECT 
 	start_station_name,
-	count(*)
+    count(*)
 FROM trip_2022_cleaned
 -- WHERE member_casual = 'member'
 GROUP BY start_station_name
@@ -158,7 +158,7 @@ ORDER BY 2 DESC
 
 SELECT 
 	start_station_name,
-	count(*)
+    count(*)
 FROM trip_2022_cleaned
 WHERE member_casual = 'member'
 GROUP BY start_station_name
