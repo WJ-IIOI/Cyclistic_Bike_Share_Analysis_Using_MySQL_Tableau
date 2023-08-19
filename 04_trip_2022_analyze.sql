@@ -151,7 +151,7 @@ GROUP BY start_station_name
 INTO OUTFILE 'F:/CS/01_Data_analysis/03_Project/01_bike_share_20230725/01data/trip_2022_lat_lng_cleaned.csv' 
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"' 
-LINES TERMINATED BY ''
+LINES TERMINATED BY '\n'
 ;
 
 SELECT 
