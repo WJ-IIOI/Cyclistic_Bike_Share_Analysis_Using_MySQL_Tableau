@@ -48,4 +48,8 @@ For the Cyclistic executive team, these insights will help Cyclistic maximize th
 # STEP 5 SHARE –  Visualizing findings
 
 
-# STEP 6 ACT – Solving the Problem
+# STEP 6 ACT – Conclusions from the analysis
+
+## Futher thinkings
+* More bikes?
+* More stations?
