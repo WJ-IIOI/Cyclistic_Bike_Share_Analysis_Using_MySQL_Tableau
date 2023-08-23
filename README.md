@@ -50,6 +50,6 @@ For the Cyclistic executive team, these insights will help Cyclistic maximize th
 
 # STEP 6 ACT – Conclusions from the analysis
 
-## Futher thinkings
+## 6.1 Futher thinkings
 * More bikes?
 * More stations?
