@@ -112,20 +112,60 @@ ORDER BY 2 DESC
 ;
 
 
+-- Top 10 stations of total users
+SELECT 
+   ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS top_10,
+   start_station_name,
+   count(*) AS users
+FROM trip_2022_cleaned
+GROUP BY 2
+ORDER BY 3 DESC
+LIMIT 10
+;
+
+
+-- Top 10 stations by members, using ROW_NUMBER() function
+SELECT 
+   ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS top_10,
+   member_casual,
+   start_station_name,
+   count(*) AS users
+FROM trip_2022_cleaned
+WHERE member_casual = 'member'
+GROUP BY 3, 2
+ORDER BY 4 DESC
+LIMIT 10
+;
+
+
+-- Top 10 users stations by casuals, using RANK() function
+SELECT 
+   RANK() OVER (ORDER BY count(*) DESC) AS top_10,
+   member_casual,
+   start_station_name,
+   count(*) AS users
+FROM trip_2022_cleaned
+WHERE member_casual = 'casual'
+GROUP BY 3, 2
+ORDER BY 4 DESC
+LIMIT 10
+;
+
+
 
 -- Checking for the null values of start_station name and id whether same
 -- start_station total 833064
 -- end_station total 892742
 -- end_lat, end_lng total 5858
 SELECT 
-    start_station_name,
-    end_station_name,
-    start_lat,
-    start_lng,
-    end_lat,
-    end_lng
+   start_station_name,
+   end_station_name,
+   start_lat,
+   start_lng,
+   end_lat,
+   end_lng
 FROM
-    trip_2022_cleaned
+   trip_2022_cleaned
 WHERE
     start_station_name IS NULL
         AND start_lat = 41.7900
