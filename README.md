@@ -37,6 +37,10 @@ For the Cyclistic executive team, these insights will help Cyclistic maximize th
 
 
 # STEP 2 PREPARE – What do we need ?
+## 2.1 Description of Data
+
+## Data Source
+I will use Cyclistic’s historical trip data to analyze and identify trends from Jan 2022 to Dec 2022 which can be downloaded from divvy_tripdata. The data has been made available by Motivate International Inc. under this license.
 
 
 # STEP 3 PROCESS – From dirty to clean
