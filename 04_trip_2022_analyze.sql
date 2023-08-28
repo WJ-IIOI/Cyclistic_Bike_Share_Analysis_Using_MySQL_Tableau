@@ -152,6 +152,22 @@ LIMIT 10
 ;
 
 
+-- Finding top10 stations by a specific datetimeframe 
+SELECT 
+   RANK() OVER (ORDER BY count(*) DESC) AS top_10,
+   EXTRACT(MONTH FROM started_at) AS month,
+   member_casual,
+   start_station_name,
+   count(*) AS users
+FROM trip_2022_cleaned
+WHERE 
+   member_casual = 'casual'
+   AND EXTRACT(MONTH FROM started_at) = 7	
+GROUP BY 3, 2, 4
+ORDER BY 5 DESC
+LIMIT 10
+;
+
 
 -- Checking for the null values of start_station name and id whether same
 -- start_station total 833064
