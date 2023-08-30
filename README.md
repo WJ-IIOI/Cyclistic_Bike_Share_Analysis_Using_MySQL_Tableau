@@ -50,6 +50,7 @@ The credibility and integrity of our data can be determined using the ROCCC syst
 * The data is comprehensive — it is understandable and does not contain any missing critical information needed to answer the question or find the solution, nor does it have human error.
 * The data is current — it is relevant and up to date, thus indicating that the source refreshes its data regularly.
 * The data is cited — the source has been vetted.\
+
 The data integrity and credibility are sufficient to provide reliable and comprehensive insights for the team's analysis.
 
 
