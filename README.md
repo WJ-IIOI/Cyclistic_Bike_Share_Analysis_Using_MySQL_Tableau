@@ -43,6 +43,16 @@ For the Cyclistic executive team, these insights will help Cyclistic maximize th
 I will use Cyclistic’s historical trip data to analyze and identify trends from Jan 2022 to Dec 2022 which can be downloaded from [Cyclistic trip data](https://divvy-tripdata.s3.amazonaws.com/index.html). The data has been made available by Motivate International Inc. under this [license](https://ride.divvybikes.com/data-license-agreement).
 
 
+## 2.2 Credibility of Data
+The credibility and integrity of our data can be determined using the ROCCC system.
+* The data is reliable — it has a large sample size, reflecting the population size.
+* The data is original — we can locate the primary source.
+* The data is comprehensive — it is understandable and does not contain any missing critical information needed to answer the question or find the solution, nor does it have human error.
+* The data is current — it is relevant and up to date, thus indicating that the source refreshes its data regularly.
+* The data is cited — the source has been vetted.
+The data integrity and credibility are sufficient to provide reliable and comprehensive insights for the team's analysis.
+
+
 # STEP 3 PROCESS – From dirty to clean
 
 
