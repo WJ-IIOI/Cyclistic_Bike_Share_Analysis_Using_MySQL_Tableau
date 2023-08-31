@@ -112,16 +112,32 @@ ORDER BY 2 DESC
 ;
 
 
--- Top 10 stations of total users
+-- Check the top 20 statt and end stations
+-- Top 20 start stations of total rides
 SELECT 
-   ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS top_10,
+   ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS top_20,
    start_station_name,
-   count(*) AS users
+   count(*) AS total_rides
 FROM trip_2022_cleaned
 GROUP BY 2
 ORDER BY 3 DESC
-LIMIT 10
+LIMIT 20
 ;
+
+
+-- Top 20 end stations of total rides
+SELECT 
+   ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS top_20,
+   end_station_name,
+   count(*) AS total_rides
+FROM trip_2022_cleaned
+GROUP BY 2
+ORDER BY 3 DESC
+LIMIT 20
+;
+-- The top 20 start and end station by total rides are almost same,
+-- because the number of the total rides are very close,
+-- only the ranking of some stations are slightly different. 
 
 
 -- Top 10 stations by members, using ROW_NUMBER() function
