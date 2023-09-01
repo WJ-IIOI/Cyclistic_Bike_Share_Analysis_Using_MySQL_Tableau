@@ -1,4 +1,4 @@
-# Cyclistic_Bike_Share_Analytics
+# Cyclistic_Bike_Share_Analysis
 Google_Data_Analytics_Capstone
 
 ## Introduction
