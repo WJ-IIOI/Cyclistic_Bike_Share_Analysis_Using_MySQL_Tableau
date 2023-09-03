@@ -17,7 +17,7 @@ visualizations.
 
 
 
-# STEP 1 ASK – Understand the problem
+# **STEP 1 ASK – Understand the problem**
 ## 1.1  Defining the problem
 The main problem for the director of the marketing and marketing analytics team is this: 
 Design marketing strategies aimed at converting Cyclistic’s casual riders into annual members.\
@@ -40,7 +40,8 @@ For the Cyclistic executive team, these insights will help Cyclistic maximize th
 * The Cyclistic marketing analytics team which is a team of data analysts who are responsible for collecting, analyzing, and reporting data that helps guide marketing strategies.
 
 
-# STEP 2 PREPARE – What do we need ?
+
+# **STEP 2 PREPARE – What do we need ?**
 ## 2.1 Description of Data
 
 ## Data Source
@@ -58,16 +59,16 @@ The credibility and integrity of our data can be determined using the ROCCC syst
 The data integrity and credibility are sufficient to provide reliable and comprehensive insights for the team's analysis.
 
 
-# STEP 3 PROCESS – From dirty to clean
+# **STEP 3 PROCESS – From dirty to clean**
 
 
-# STEP 4 ANALYZE – Find the insights
+# **STEP 4 ANALYZE – Find the insights**
 
 
-# STEP 5 SHARE –  Visualizing findings
+# **STEP 5 SHARE –  Visualizing findings**
 
 
-# STEP 6 ACT – Conclusions from the analysis
+# **STEP 6 ACT – Conclusions from the analysis**
 
 ## 6.1 Futher thinkings
 * More bikes?
