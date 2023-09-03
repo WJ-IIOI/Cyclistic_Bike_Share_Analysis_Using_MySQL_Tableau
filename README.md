@@ -17,14 +17,14 @@ visualizations.
 
 
 
-# ***STEP 1 ASK – Understand the problem***
+# **STEP 1 ASK – Understand the problem**
 ## 1.1  Defining the problem
 The main problem for the director of the marketing and marketing analytics team is this: 
 Design marketing strategies aimed at converting Cyclistic’s casual riders into annual members.\
 There are three questions that will guide this future marketing program. 
-**1. How do annual members and casual riders use Cyclistic bikes differently?**
-**2. Why would casual riders buy Cyclistic annual memberships?**
-**3. How can Cyclistic use digital media to influence casual riders to become members?**
+1. **How do annual members and casual riders use Cyclistic bikes differently?**
+2. **Why would casual riders buy Cyclistic annual memberships?**
+3. **How can Cyclistic use digital media to influence casual riders to become members?**
 
 By looking at the data, we will be able to first get a broad sense of certain patterns that are occurring in the two different groups.
 Understanding the differences will provide more accurate customer profiles for each group. These insights will help the marketing analytics team design high quality targeted marketing for converting casual riders into members.
