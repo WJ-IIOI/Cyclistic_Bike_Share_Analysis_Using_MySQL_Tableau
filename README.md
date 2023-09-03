@@ -17,12 +17,8 @@ visualizations.
 
 
 
-# STEP 1 ASK – Understand the Problem
-## 1.1 Business task
-*	Devise marketing strategies to convert casual riders to members.
-*	Analyze historical bike trip data to identify trends in how annual members and casual riders use Cyclistic bikes differently.
-
-## 1.2  Defining the problem
+# STEP 1 ASK – Understand the problem
+## 1.1  Defining the problem
 The main problem for the director of the marketing and marketing analytics team is this: 
 Design marketing strategies aimed at converting Cyclistic’s casual riders into annual members.\
 There are three questions that will guide this future marketing program. 
@@ -34,6 +30,14 @@ By looking at the data, we will be able to first get a broad sense of certain pa
 Understanding the differences will provide more accurate customer profiles for each group. These insights will help the marketing analytics team design high quality targeted marketing for converting casual riders into members.
 For the Cyclistic executive team, these insights will help Cyclistic maximize the number of annual members and will fuel future growth for the company.
 
+## 1.2 Business task
+*	Devise marketing strategies to convert casual riders to members.
+*	Analyze historical bike trip data to identify trends in how annual members and casual riders use Cyclistic bikes differently.
+
+## 1.3 Identify key stakeholders
+* The director of marketing who is responsible for the development of campaigns and initiatives to promote the bike-share program.
+* The Cyclistic executive team who is notoriously detail-oriented and will decide whether to approve the recommended marketing program.
+* The Cyclistic marketing analytics team which is a team of data analysts who are responsible for collecting, analyzing, and reporting data that helps guide marketing strategies.
 
 
 # STEP 2 PREPARE – What do we need ?
