@@ -211,37 +211,69 @@ GROUP BY TRIM(start_station_name)
 ORDER BY 1 DESC;
 
 -- ##############################################################
--- geographic latitude and longitude not match the station_name
--- average all the latitude and longitude by same station, then sum the total users by station
+-- geographic latitude and longitude not all match the station location
+-- find each station its most count latitude and longitude, it should be the right station location
+-- both update the start and end stations 
 
-SELECT 'start_station_name', 'lat', 'lng' 
-UNION ALL SELECT 
-    start_station_name, AVG(start_lat), AVG(start_lng)
-FROM
-    trip_2022_cleaned
-GROUP BY start_station_name 
-INTO OUTFILE 'F:/CS/01_Data_analysis/03_Project/01_bike_share_20230725/01data/trip_2022_lat_lng_cleaned.csv' 
+SELECT
+   start_station_name,
+   start_lat,
+   start_lng
+FROM (
+	SELECT 
+   start_station_name,
+   start_lat,
+   start_lng,
+   count(*) AS ride_num,
+   -- Use PARTITION BY function to rank num of the lat&lng by each station
+   ROW_NUMBER() OVER(PARTITION BY start_station_name ORDER BY count(*) DESC) AS top
+   FROM trip_2022_cleaned
+   GROUP BY
+   start_station_name,
+   start_lat,
+   start_lng
+	ORDER BY 
+   start_station_name,
+   count(*) DESC
+   ) AS sgeo
+-- Find the rank 1 of each station which means the most useful location
+WHERE top = 1
+ORDER BY ride_num DESC
+INTO OUTFILE 'F:/CS/01_Data_analysis/03_Project/01_bike_share_20230725/01data/trip_2022_start_lat_lng_cleaned.csv' 
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"' 
 LINES TERMINATED BY '\n'
 ;
 
-SELECT 
-    start_station_name, COUNT(*)
-FROM
-    trip_2022_cleaned
-GROUP BY start_station_name
-ORDER BY 2 DESC
-;
 
-SELECT 
-    start_station_name, COUNT(*)
-FROM
-    trip_2022_cleaned
-WHERE
-    member_casual = 'member'
-GROUP BY start_station_name
-ORDER BY 2 DESC
+SELECT
+   end_station_name,
+   end_lat,
+   end_lng
+FROM (
+   SELECT 
+   end_station_name,
+   end_lat,
+   end_lng,
+   count(*) AS ride_num,
+   -- Use PARTITION BY function to rank num of the lat&lng by each station
+   ROW_NUMBER() OVER(PARTITION BY end_station_name ORDER BY count(*) DESC) AS top
+   FROM trip_2022_cleaned
+   GROUP BY
+   end_station_name,
+   end_lat,
+   end_lng
+   ORDER BY 
+   end_station_name,
+   count(*) DESC
+   ) AS sgeo
+-- Find the rank 1 of each station which means the most useful location
+WHERE top = 1
+ORDER BY ride_num DESC
+INTO OUTFILE 'F:/CS/01_Data_analysis/03_Project/01_bike_share_20230725/01data/trip_2022_end_lat_lng_cleaned.csv' 
+FIELDS TERMINATED BY ',' 
+OPTIONALLY ENCLOSED BY '"' 
+LINES TERMINATED BY '\n'
 ;
 
 
