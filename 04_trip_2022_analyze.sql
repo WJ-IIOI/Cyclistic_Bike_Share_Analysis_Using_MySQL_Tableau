@@ -216,26 +216,26 @@ ORDER BY 1 DESC;
 -- both update the start and end stations 
 
 SELECT
-   start_station_name,
-   start_lat,
-   start_lng
+	start_station_name,
+	start_lat,
+	start_lng
 FROM (
 	SELECT 
-   start_station_name,
-   start_lat,
-   start_lng,
-   count(*) AS ride_num,
+	start_station_name,
+	start_lat,
+	start_lng,
+	count(*) AS ride_num,
    -- Use PARTITION BY function to rank num of the lat&lng by each station
-   ROW_NUMBER() OVER(PARTITION BY start_station_name ORDER BY count(*) DESC) AS top
-   FROM trip_2022_cleaned
-   GROUP BY
-   start_station_name,
-   start_lat,
-   start_lng
+	ROW_NUMBER() OVER(PARTITION BY start_station_name ORDER BY count(*) DESC) AS top
+	FROM trip_2022_cleaned
+	GROUP BY
+	start_station_name,
+	start_lat,
+	start_lng
 	ORDER BY 
-   start_station_name,
-   count(*) DESC
-   ) AS sgeo
+	start_station_name,
+	count(*) DESC
+	) AS sgeo
 -- Find the rank 1 of each station which means the most useful location
 WHERE top = 1
 ORDER BY ride_num DESC
@@ -247,26 +247,26 @@ LINES TERMINATED BY '\n'
 
 
 SELECT
-   end_station_name,
-   end_lat,
-   end_lng
+	end_station_name,
+	end_lat,
+	end_lng
 FROM (
-   SELECT 
-   end_station_name,
-   end_lat,
-   end_lng,
-   count(*) AS ride_num,
+	SELECT 
+	end_station_name,
+	end_lat,
+	end_lng,
+	count(*) AS ride_num,
    -- Use PARTITION BY function to rank num of the lat&lng by each station
-   ROW_NUMBER() OVER(PARTITION BY end_station_name ORDER BY count(*) DESC) AS top
-   FROM trip_2022_cleaned
-   GROUP BY
-   end_station_name,
-   end_lat,
-   end_lng
-   ORDER BY 
-   end_station_name,
-   count(*) DESC
-   ) AS sgeo
+	ROW_NUMBER() OVER(PARTITION BY end_station_name ORDER BY count(*) DESC) AS top
+	FROM trip_2022_cleaned 
+	GROUP BY
+	end_station_name,
+	end_lat,
+	end_lng
+	ORDER BY 
+	end_station_name,
+	count(*) DESC
+	) AS sgeo
 -- Find the rank 1 of each station which means the most useful location
 WHERE top = 1
 ORDER BY ride_num DESC
