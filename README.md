@@ -1,5 +1,6 @@
 # Cyclistic Bike-Share Analysis Case Study
 
+## Introduction
 Welcome to my capstone project for the Google Data Analytics Certificate course! 
 In this case study, I will tackle many real-world tasks of a data analyst for a bike-share company based in Chicago in order to design marketing strategies to convert casual riders to members.
 I will analyze historical data to identify trends in how annual members and casual riders use Cyclistic bikes differently.
@@ -7,12 +8,9 @@ I will analyze historical data to identify trends in how annual members and casu
 The main tools I use are **EXCEL**, **MySQL** and **Tableau**. Here are the highlights:
 * Tableau Dashboard: [Bike-Share Analysis](https://public.tableau.com/app/profile/jia.wang3280/viz/Bike-shareanalysis2022/Overview).
 * Course: [Google Data Analytics Capstone](https://www.coursera.org/learn/google-data-analytics-capstone).
+* Data sourse: [divvybikes](https://divvybikes.com/system-data).
 
-
-## Introduction
-In this case study, I will perform many real-world tasks of a junior data analyst. 
-I will work for a fictional company, Cyclistic, and meet different characters and team members. In order to
-answer the key business questions, I will follow the steps of the data analysis process: **ask**, **prepare**, **process**, **analyze**,
+In order to answer the key business questions, I will follow the steps of the data analysis process: [**ask**](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/edit/main/README.md# **STEP 1 ASK – Understand the problem**), **prepare**, **process**, **analyze**,
 **share**, and **act**.
 
 ## Scenario
