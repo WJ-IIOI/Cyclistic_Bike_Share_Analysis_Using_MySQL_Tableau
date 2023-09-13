@@ -2,16 +2,20 @@
 
 ## Introduction
 Welcome to my capstone project for the Google Data Analytics Certificate course! 
-In this case study, I will tackle many real-world tasks of a data analyst for a bike-share company based in Chicago in order to design marketing strategies to convert casual riders to members.
-I will analyze historical data to identify trends in how annual members and casual riders use Cyclistic bikes differently.
+In this case study, I will tackle many real-world tasks of a data analyst for a bike-share company based in Chicago to design marketing strategies to convert casual riders to members and analyze historical data to identify trends in how annual members and casual riders use Cyclistic bikes differently.
 
 The main tools I use are **EXCEL**, **MySQL** and **Tableau**. Here are the highlights:
 * Tableau Dashboard: [Bike-Share Analysis](https://public.tableau.com/app/profile/jia.wang3280/viz/Bike-shareanalysis2022/Overview).
 * Course: [Google Data Analytics Capstone](https://www.coursera.org/learn/google-data-analytics-capstone).
 * Data sourse: [divvybikes](https://divvybikes.com/system-data).
 
-In order to answer the key business questions, I will follow the steps of the data analysis process: [*Ask*](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#step-1-ask--understand-the-problem), **prepare**, **process**, **analyze**,
-**share**, and **act**.
+In order to breakdown the tasks, I will follow the steps of the data analysis process down below: 
+1. [**Ask**](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#step-1-ask--understand-the-problem)
+2. [**Prepare**](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-2-prepare--what-do-we-need-)
+3. [**Process**](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-3-process--from-dirty-to-clean)
+4. [**Analyze**](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-4-analyze--find-the-insights)
+5. [**Share**](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-5-share---visualizing-findings)
+6. [**Act**](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-6-act--conclusions-from-the-analysis)
 
 ## Scenario
 I am assuming to be a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago. The director
