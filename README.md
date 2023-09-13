@@ -10,7 +10,7 @@ The main tools I use are **EXCEL**, **MySQL** and **Tableau**. Here are the high
 * Course: [Google Data Analytics Capstone](https://www.coursera.org/learn/google-data-analytics-capstone).
 * Data sourse: [divvybikes](https://divvybikes.com/system-data).
 
-In order to answer the key business questions, I will follow the steps of the data analysis process: [ask](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#STEP 1 ASK – Understand the problem), **prepare**, **process**, **analyze**,
+In order to answer the key business questions, I will follow the steps of the data analysis process: [ask](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#step-1-ask--understand-the-problem), **prepare**, **process**, **analyze**,
 **share**, and **act**.
 
 ## Scenario
