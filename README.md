@@ -7,11 +7,11 @@ In this case study, I will tackle many real-world tasks of a data analyst for a 
 The main tools I used thought this project are **EXCEL**, **MySQL** and **Tableau**. Here are the highlights:
 * Tableau Dashboard: [Bike-Share Analysis](https://public.tableau.com/app/profile/jia.wang3280/viz/Bike-shareanalysis2022/Overview).
 * Course: [Google Data Analytics Capstone](https://www.coursera.org/learn/google-data-analytics-capstone).
-* Data sourse: [divvybikes](https://divvybikes.com/system-data).
+* Data source: [Divvy trip history data](https://divvybikes.com/system-data).
 
 In order to breakdown the tasks, I will follow the steps of the data analysis process down below: 
 1. [Ask](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-1-ask--understand-the-problem)
-2. [Prepare](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-2-prepare--what-do-we-need-)
+2. [Prepare](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-2-prepare--A-description-of-data)
 3. [Process](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-3-process--from-dirty-to-clean)
 4. [Analyze](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-4-analyze--find-the-insights)
 5. [Share](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-5-share---visualizing-findings)
@@ -51,24 +51,38 @@ By looking at the data, we will be able to first get a broad sense of certain pa
 * **The executive team** which is notoriously detail-oriented and will decide whether to approve the recommended marketing program.
 * **The marketing analytics team** which is a team of data analysts who are responsible for collecting, analyzing, and reporting data that helps guide marketing strategies.
 
+# **STEP 2 PREPARE – A description of data**
+## 2.1 Data source
+I will work through this project by using **Divvy trip history data** from Jan 2022 to Dec 2022.\
+_( Note: The datasets have a different name because Cyclistic is a fictional company. )_\
+Data can be downloaded from [Divvy trip history data](https://divvy-tripdata.s3.amazonaws.com/index.html).
 
+## 2.2 Data organization
+Each trip is anonymized and includes:
+* Ride ID
+* Bike type
+* Rider type (Member, Casual)
+* Trip start day and time
+* Trip end day and time
+* Trip start station
+* Trip end station
+* Trip start latitude and longitude
+* Trip end latitude and longitude
 
-# **STEP 2 PREPARE – What do we need ?**
-## 2.1 Description of Data
+## 2.3 Credibility of Data
+The credibility and integrity of our data can be determined using the **ROCCC** system.
+* **Reliable** — The data has a large sample size, reflecting the population size.
+* **Original** — we can locate the primary source.
+* **Comprehensive** — The data is understandable and does not contain any missing critical information needed to answer the business question or find the solution, nor does it has human error.
+* **Current** — The data is relevant and up to date, thus indicating that the source refreshes its data regularly.
+* **Cited** — the source has been vetted.
 
-## Data Source
-I will use Cyclistic’s historical trip data to analyze and identify trends from Jan 2022 to Dec 2022 which can be downloaded from [Cyclistic trip data](https://divvy-tripdata.s3.amazonaws.com/index.html). The data has been made available by Motivate International Inc. under this [license](https://ride.divvybikes.com/data-license-agreement).
+The data integrity and credibility are sufficient to provide reliable and comprehensive insights for analysis.
 
-
-## 2.2 Credibility of Data
-The credibility and integrity of our data can be determined using the ROCCC system.
-* The data is reliable — it has a large sample size, reflecting the population size.
-* The data is original — we can locate the primary source.
-* The data is comprehensive — it is understandable and does not contain any missing critical information needed to answer the question or find the solution, nor does it have human error.
-* The data is current — it is relevant and up to date, thus indicating that the source refreshes its data regularly.
-* The data is cited — the source has been vetted.
-
-The data integrity and credibility are sufficient to provide reliable and comprehensive insights for the team's analysis.
+## 2.4 Licensing, privacy, security and accessibility
+* **Licensing**: The data has been made available by Motivate International Inc. under this [license](https://ride.divvybikes.com/data-license-agreement).
+* **Privacy**: The data-privacy issues prohibit using riders’ personally identifiable information such as gender and age.
+* **Security and accessibility**: This is public data that we can use to work with and released on a monthly schedule.
 
 
 # **STEP 3 PROCESS – From dirty to clean**
