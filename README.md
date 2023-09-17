@@ -55,11 +55,26 @@ By looking at the data, we will be able to first get a broad sense of certain pa
 ## 2.1 Data source
 I will work through this project by using **Divvy trip history data** from Jan 2022 to Dec 2022.\
 _( Note: The datasets have a different name because Cyclistic is a fictional company. )_\
-Data can be downloaded from [Divvy trip history data](https://divvy-tripdata.s3.amazonaws.com/index.html).
+Data can be downloaded: [Divvy trip history data](https://divvy-tripdata.s3.amazonaws.com/index.html).
 
-## 2.2 Data organization
-Each trip is anonymized and includes:
-* Ride ID
+## 2.2 Licensing, privacy, security and accessibility
+* **Licensing**: The data has been made available by Motivate International Inc. under this [license](https://ride.divvybikes.com/data-license-agreement).
+* **Privacy**: The data-privacy issues prohibit using riders’ personally identifiable information such as gender and age.
+* **Security and accessibility**: This is public data that we can use to work with and released on a monthly schedule.
+
+## 2.3 Credibility of Data
+The credibility and integrity of our data can be determined using the **ROCCC** system.
+* **Reliable** — The data has a large sample size, reflecting the population size.
+* **Original** — We can locate the primary source.
+* **Comprehensive** — The data is understandable and does not contain any missing critical information needed to answer the business question or find the solution, nor does it has human error.
+* **Current** — The data is relevant and up to date, thus indicating that the source refreshes its data regularly.
+* **Cited** — The source has been vetted.
+
+The data integrity and credibility are sufficient to provide reliable and comprehensive insights for analysis.
+
+## 2.4 Data organization
+The data is stored in 12 CSV files for each month. Each data is anonymized and includes:
+* Unique ride ID
 * Bike type
 * Rider type (Member, Casual)
 * Trip start day and time
@@ -69,20 +84,17 @@ Each trip is anonymized and includes:
 * Trip start latitude and longitude
 * Trip end latitude and longitude
 
-## 2.3 Credibility of Data
-The credibility and integrity of our data can be determined using the **ROCCC** system.
-* **Reliable** — The data has a large sample size, reflecting the population size.
-* **Original** — we can locate the primary source.
-* **Comprehensive** — The data is understandable and does not contain any missing critical information needed to answer the business question or find the solution, nor does it has human error.
-* **Current** — The data is relevant and up to date, thus indicating that the source refreshes its data regularly.
-* **Cited** — the source has been vetted.
+## 2.4 Prepare data in MySQL Workbench
+The data contains over millions of ride records. MySQL Workbench is a good tool to work with the huge size data through this project.\
+In this step:
+1. Creating database and template table for loading files.
+2. Importing data from the CSV files of each month.
+3. Combining the 12 separate tables into one single table.
 
-The data integrity and credibility are sufficient to provide reliable and comprehensive insights for analysis.
+After above, it's ready for PROCESS.\
+**MySQL query**: [01 Data prepare](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/01_trip_2022_import.sql)
 
-## 2.4 Licensing, privacy, security and accessibility
-* **Licensing**: The data has been made available by Motivate International Inc. under this [license](https://ride.divvybikes.com/data-license-agreement).
-* **Privacy**: The data-privacy issues prohibit using riders’ personally identifiable information such as gender and age.
-* **Security and accessibility**: This is public data that we can use to work with and released on a monthly schedule.
+
 
 
 # **STEP 3 PROCESS – From dirty to clean**
