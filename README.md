@@ -1,6 +1,8 @@
 # Cyclistic Bike-Share Analysis Case Study
 
-## Introduction
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
+
+### Introduction
 Welcome to my capstone project for the Google Data Analytics Certificate course!\
 In this case study, I will tackle many real-world tasks of a data analyst for a bike-share company to analyze historical data to identify trends in how annual members and casual riders use Cyclistic bikes differently and design marketing strategies to convert casual riders to members.
 
@@ -17,7 +19,7 @@ In order to breakdown the tasks, I will follow the steps of the data analysis pr
 5. [Share](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-5-share---visualizing-findings)
 6. [Act](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-6-act--conclusions-from-the-analysis)
 
-## Scenario
+### Scenario
 * _I am assuming to be a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago_.
 * _Cyclistic’s finance analysts have concluded that annual members are much more profitable than casual riders_.
 * _The director of marketing believes that maximizing the number of annual members will be key to the company's future growth_.
@@ -25,14 +27,14 @@ In order to breakdown the tasks, I will follow the steps of the data analysis pr
 * _Cyclistic executives must approve our recommendations, so they must be backed up with compelling data insights and professional data
 visualizations_.
 
-## About the company
+### About the company
 * _Cyclistic is a bike-share company which has grown to a fleet of 5,824 bicycles and a network of 692 stations across Chicago_.
 * _It has 3 flexible pricing plans: single-ride passes, full-day passes, and annual memberships_.
 * _Customers who purchase single-ride or full-day passes are referred to as casual riders. Customers who purchase annual memberships are Cyclistic members_.
 * _Its users are more likely to ride for leisure, but about 30% use bikes to commute to work each day_.
 
 # **STEP 1 ASK – Understand the problem**
-## 1.1 Defining the problem
+### 1.1 Defining the problem
 The main problem for the director of the marketing and marketing analytics team is this: 
 Design marketing strategies aimed at converting Cyclistic’s casual riders into annual members.\
 There are three questions that will guide this future marketing program. 
@@ -42,52 +44,60 @@ There are three questions that will guide this future marketing program.
 
 By looking at the data, we will be able to first get a broad sense of certain patterns that are occurring in the two different groups. Understanding the differences will provide more accurate customer profiles for each group. These insights will help the marketing analyst team design high quality targeted marketing for converting casual riders into members. For the executive team, these insights will help Cyclistic maximize the number of annual members and will fuel future growth for the company.
 
-## 1.2 Business task
+### 1.2 Business task
 *	Analyze historical bike trip data to identify trends in how annual members and casual riders use Cyclistic bikes differently.
 *	Design marketing strategies aimed at converting casual riders to members.
 
-## 1.3 Identify key stakeholders
+### 1.3 Identify key stakeholders
 * **The director of marketing** who is responsible for the development of campaigns and initiatives to promote the bike-share program.
 * **The executive team** which is notoriously detail-oriented and will decide whether to approve the recommended marketing program.
 * **The marketing analytics team** which is a team of data analysts who are responsible for collecting, analyzing, and reporting data that helps guide marketing strategies.
 
 # **STEP 2 PREPARE – A description of data**
-## 2.1 Data source
+### 2.1 Data source
 I will work through this project by using **Divvy trip history data** from Jan 2022 to Dec 2022.\
 _( Note: The datasets have a different name because Cyclistic is a fictional company. )_\
 Data can be downloaded: [Divvy trip history data](https://divvy-tripdata.s3.amazonaws.com/index.html).
 
-## 2.2 Licensing, privacy, security and accessibility
+### 2.2 Licensing, privacy, security and accessibility
 * **Licensing**: The data has been made available by Motivate International Inc. under this [license](https://ride.divvybikes.com/data-license-agreement).
 * **Privacy**: The data-privacy issues prohibit using riders’ personally identifiable information such as gender and age.
 * **Security and accessibility**: This is public data that we can use to work with and released on a monthly schedule.
 
-## 2.3 Credibility of Data
+### 2.3 Credibility of Data
 The credibility and integrity of our data can be determined using the **ROCCC** system.
 * **Reliable** — The data has a large sample size, reflecting the population size.
 * **Original** — We can locate the primary source.
 * **Comprehensive** — The data is understandable and does not contain any missing critical information needed to answer the business question or find the solution, nor does it has human error.
 * **Current** — The data is relevant and up to date, thus indicating that the source refreshes its data regularly.
-* **Cited** — The source has been vetted.
+* **Cited** — The data source are publicly available provided by Motivate International Inc. and Chicago Department of Transportation.
 
 The data integrity and credibility are sufficient to provide reliable and comprehensive insights for analysis.
 
-## 2.4 Data organization
-The data is stored in 12 CSV files for each month. Each data is anonymized and includes:
-* Unique ride ID
-* Bike type
-* Rider type (Member, Casual)
-* Trip start day and time
-* Trip end day and time
-* Trip start station
-* Trip end station
-* Trip start latitude and longitude
-* Trip end latitude and longitude
+### 2.4 Data organization
+The data is ride records stored in 12 CSV files for each month.\
+Each record is anonymized and includes 13 fields values:
 
-## 2.4 Prepare data in MySQL Workbench
+#_Field | Field Name | Description | Date Type
+:---: | --- | --- | ---
+1 | ride_id | Unique ride_id | Varchar
+2 | rideable_type | Bike type | Varchar
+3 | started_at | Trip start day and time | Datetime
+4 | ended_at | Trip end day and time | Datetime
+5 | start_station_name | Trip start station | Varchar
+6 | start_station_id | Trip start station id | Varchar
+7 | end_station_name | Trip end station | Varchar
+8 | end_station_id | Trip end station id | Varchar
+9 | start_lat | Trip start latitude | Float
+10 | start_lng | Trip start longitute | Float
+11 | end_lat | Trip end latitude | Float
+12 | end_lat| Trip end longitute | Float
+13 | member_casual | Rider type | Varchar
+
+### 2.4 Prepare data in MySQL Workbench
 The data contains over millions of ride records. MySQL Workbench is a good tool to work with the huge size data through this project.\
 In this step:
-1. Creating database and template table for loading files.
+1. Creating project database and template table struture for loading files.
 2. Importing data from the CSV files of each month.
 3. Combining the 12 separate tables into one single table.
 
@@ -99,6 +109,26 @@ After above, it's ready for PROCESS.\
 
 # **STEP 3 PROCESS – From dirty to clean**
 
+### 3.1 Remove irrelevant data
+> **read carefull**
+### 3.2 Remove duplicate data
+
+```sql
+-- Checking duplicate rows by 'ride_id' column which is unique value 
+SELECT
+    COUNT(*) - COUNT(DISTINCT ride_id) AS duplicate_rows
+FROM trip_2022;
+
+-- 0 duplicate
+
+```
+
+### 3.3 Fix structural errors
+### 3.4 Do type conversion
+### 3.5 Handle missing data
+### 3.6 Deal with outliers
+### 3.7 Standardize/Normalize data
+### 3.8 Validate data
 
 # **STEP 4 ANALYZE – Find the insights**
 
