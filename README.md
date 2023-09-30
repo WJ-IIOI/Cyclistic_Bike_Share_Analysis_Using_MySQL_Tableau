@@ -107,13 +107,13 @@ After above, it's ready for PROCESS.\
 
 
 ## **STEP 3 PROCESS – From dirty to cleaning**
-* 3.1. [Backup data for cleaning](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#31-backup-data-for-cleaning)
-* 3.2. [Remove duplicate data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#32--remove-duplicate-data)
-* 3.3. [Remove irrelevant data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#33-remove-irrelevant-data)
-* 3.4. [Deal with outliers and invalid data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#34-deal-with-outliers-and-invalid-data)
-* 3.5. [Handle missing data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#35-handle-missing-data)
-* 3.6. [Do type conversion](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#36-do-type-conversion)
-* 3.7. [Fix ambiguities and errors](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#37-fix-ambiguities-and-errors)
+* 3.1. [Backup data for cleaning](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#31-backup-data-for-cleaning)
+* 3.2. [Remove duplicate data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#32--remove-duplicate-data)
+* 3.3. [Remove irrelevant data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#33-remove-irrelevant-data)
+* 3.4. [Deal with outliers and invalid data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#34-deal-with-outliers-and-invalid-data)
+* 3.5. [Handle missing data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#35-handle-missing-data)
+* 3.6. [Do type conversion](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#36-do-type-conversion)
+* 3.7. [Fix ambiguities and errors](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#37-fix-ambiguities-and-errors)
 * 3.8.
 * 3.9.
 
