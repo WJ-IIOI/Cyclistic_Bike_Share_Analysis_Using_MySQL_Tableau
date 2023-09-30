@@ -33,7 +33,7 @@ visualizations_.
 * _Customers who purchase single-ride or full-day passes are referred to as casual riders. Customers who purchase annual memberships are Cyclistic members_.
 * _Its users are more likely to ride for leisure, but about 30% use bikes to commute to work each day_.
 
-# **STEP 1 ASK – Understand the problem**
+## **STEP 1 ASK – Understand the problem**
 ### 1.1 Defining the problem
 The main problem for the director of the marketing and marketing analytics team is this: 
 Design marketing strategies aimed at converting Cyclistic’s casual riders into annual members.\
@@ -53,16 +53,17 @@ By looking at the data, we will be able to first get a broad sense of certain pa
 * **The executive team** which is notoriously detail-oriented and will decide whether to approve the recommended marketing program.
 * **The marketing analytics team** which is a team of data analysts who are responsible for collecting, analyzing, and reporting data that helps guide marketing strategies.
 
-# **STEP 2 PREPARE – A description of data**
+
+## **STEP 2 PREPARE – A description of data**
 ### 2.1 Data source
 I will work through this project by using **Divvy trip history data** from Jan 2022 to Dec 2022.\
 _( Note: The datasets have a different name because Cyclistic is a fictional company. )_\
 Data can be downloaded: [Divvy trip history data](https://divvy-tripdata.s3.amazonaws.com/index.html).
 
 ### 2.2 Licensing, privacy, security and accessibility
-* **Licensing**: The data has been made available by Motivate International Inc. under this [license](https://ride.divvybikes.com/data-license-agreement).
-* **Privacy**: The data-privacy issues prohibit using riders’ personally identifiable information such as gender and age.
-* **Security and accessibility**: This is public data that we can use to work with and released on a monthly schedule.
+* **Licensing** — The data has been made available by Motivate International Inc. under this [license](https://ride.divvybikes.com/data-license-agreement).
+* **Privacy** — The data-privacy issues prohibit using riders’ personally identifiable information such as gender and age.
+* **Security and accessibility** — This is public data that we can use to work with and released on a monthly schedule.
 
 ### 2.3 Credibility of Data
 The credibility and integrity of our data can be determined using the **ROCCC** system.
@@ -105,38 +106,127 @@ After above, it's ready for PROCESS.\
 **MySQL query**: [01 Data prepare](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/01_trip_2022_import.sql)
 
 
-
-
-# **STEP 3 PROCESS – From dirty to clean**
-
-### 3.1 Remove irrelevant data
-> **read carefull**
-### 3.2 Remove duplicate data
-
+## **STEP 3 PROCESS – From dirty to clean**
+### 3.1 Backup data for cleaning
 ```sql
--- Checking duplicate rows by 'ride_id' column which is unique value 
-SELECT
-    COUNT(*) - COUNT(DISTINCT ride_id) AS duplicate_rows
-FROM trip_2022;
+-- add new column called ride_length, caculate the length of each ride
+-- total 5667717 rows before cleaning as original table
 
--- 0 duplicate
+DROP TABLE IF EXISTS trip_2022_clean;
 
+CREATE TABLE IF NOT EXISTS trip_2022_clean AS 
+(	
+    SELECT
+        ride_id,
+        rideable_type,
+        started_at,
+        ended_at,
+        TIMEDIFF(ended_at, started_at) AS ride_length,
+        start_station_name,
+        start_station_id,
+        end_station_name,
+        end_station_id,
+        start_lat,
+        start_lng,
+        end_lat,
+        end_lng,
+        member_casual
+    FROM trip_2022
+);  
 ```
 
-### 3.3 Fix structural errors
-### 3.4 Do type conversion
+### 3.2  Remove duplicate data
+```sql
+-- check duplicate rows by 'ride_id' column which is unique value 
+-- 0 null value and 0 duplicate
+
+SELECT
+    SUM(isnull(ride_id)) AS null_value,
+    COUNT(*) - COUNT(DISTINCT ride_id) AS duplicate_rows
+FROM trip_2022_clean;
+```
+
+### 3.3 Remove irrelevant data
+```sql
+-- check datetime range
+-- all trips started in 2022 which means each trip record is relevant of 2022
+
+SELECT 
+    MIN(started_at),
+    MAX(started_at)
+FROM trip_2022_clean;
+```
+
+### 3.4 Deal with outliers and invalid data
+> Check ride length outlier
+```sql
+SELECT 
+    MIN(ride_length),
+    MAX(ride_length)
+FROM trip_2022_clean;
+```
+
+```sql
+-- any trip with negative ride_length are considered invalid
+-- any trip less than 60 ses are potentially false starts or users trying to re-dock a bike to ensure it was secure
+-- any trip greater than 24 hrs are considered invalid outliers that are taken by staff as they service and inspect the system
+
+SELECT
+    started_at,
+    ended_at,
+    ride_length
+    FROM trip_2022_clean
+WHERE 
+    ride_length < '00:01:00'
+    OR ride_length > '24:00:00'
+ORDER BY ride_length
+;
+```
+
+> Update data.
+```sql
+-- remove 126449 rows which ride_length < 1min or > 24hr
+DELETE FROM trip_2022_clean
+WHERE 
+    ride_length < '00:01:00'
+    OR ride_length > '24:00:00';
+```
 ### 3.5 Handle missing data
-### 3.6 Deal with outliers
-### 3.7 Standardize/Normalize data
-### 3.8 Validate data
+> Checking the missing values of all columns
+```sql
+-- 802104 null values of start_station_name, start_station_id
+-- 845268 null values of end_station_name, end_station_id
+-- 702 null values of end_lat, end_lng
 
-# **STEP 4 ANALYZE – Find the insights**
+SELECT 
+    sum(isnull(ride_id)) ride_id,
+    sum(isnull(rideable_type)) rideable_type,
+    sum(isnull(started_at)) started_at,
+    sum(isnull(ended_at)) ended_at,
+    sum(isnull(start_station_name)) start_station_name,
+    sum(isnull(start_station_id)) start_station_id,
+    sum(isnull(end_station_name)) end_station_name,
+    sum(isnull(end_station_id)) end_station_id,
+    sum(isnull(start_lat)) start_lat,
+    sum(isnull(start_lng)) start_lng,
+    sum(isnull(end_lat)) end_lat,
+    sum(isnull(end_lng)) end_lng,
+    sum(isnull(member_casual)) member_casual
+FROM trip_2022_clean
+;
+```
+### 3.6 Do type conversion
+### 3.7 Fix structural errors
+### 3.8 Standardize/Normalize data
+### 3.9 Validate data
+
+## **STEP 4 ANALYZE – Find the insights**
 
 
-# **STEP 5 SHARE –  Visualizing findings**
+## **STEP 5 SHARE –  Visualizing findings**
 
 
-# **STEP 6 ACT – Conclusions from the analysis**
+## **STEP 6 ACT – Conclusions from the analysis**
 
 ## 6.1 Futher thinkings
 * More bikes?
