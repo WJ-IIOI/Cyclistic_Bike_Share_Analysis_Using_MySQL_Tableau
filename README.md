@@ -95,7 +95,7 @@ Each record is anonymized and includes 13 fields values:
 12 | end_lat| Trip end longitute | Float
 13 | member_casual | Rider type | Varchar
 
-### 2.4 Prepare data in MySQL Workbench
+### 2.5 Prepare data in MySQL Workbench
 The data contains over millions of ride records. MySQL Workbench is a good tool to work with the huge size data through this project.\
 In this step:
 1. Creating project database and template table struture for loading files.
@@ -106,10 +106,20 @@ After above, it's ready for PROCESS.\
 **MySQL query**: [01 Data prepare](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/01_trip_2022_import.sql)
 
 
-## **STEP 3 PROCESS – From dirty to clean**
+## **STEP 3 PROCESS – From dirty to cleaning**
+* 3.1. [Backup data for cleaning](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#31-backup-data-for-cleaning)
+* 3.2. [Remove duplicate data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#32--remove-duplicate-data)
+* 3.3. [Remove irrelevant data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#33-remove-irrelevant-data)
+* 3.4. [Deal with outliers and invalid data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#34-deal-with-outliers-and-invalid-data)
+* 3.5. [Handle missing data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#35-handle-missing-data)
+* 3.6. [Do type conversion](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#36-do-type-conversion)
+* 3.7. [Fix ambiguities and errors](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/README.md#37-fix-ambiguities-and-errors)
+* 3.8.
+* 3.9.
+
 ### 3.1 Backup data for cleaning
 ```sql
--- add new column called ride_length, caculate the length of each ride
+-- add new column called ride_length to caculate the length of each ride
 -- total 5667717 rows before cleaning as original table
 
 DROP TABLE IF EXISTS trip_2022_clean;
@@ -143,7 +153,8 @@ CREATE TABLE IF NOT EXISTS trip_2022_clean AS
 SELECT
     SUM(isnull(ride_id)) AS null_value,
     COUNT(*) - COUNT(DISTINCT ride_id) AS duplicate_rows
-FROM trip_2022_clean;
+FROM trip_2022_clean
+;
 ```
 
 ### 3.3 Remove irrelevant data
@@ -154,16 +165,19 @@ FROM trip_2022_clean;
 SELECT 
     MIN(started_at),
     MAX(started_at)
-FROM trip_2022_clean;
+FROM trip_2022_clean
+;
 ```
 
 ### 3.4 Deal with outliers and invalid data
-> Check ride length outlier
 ```sql
+-- check ride length outlier
+
 SELECT 
     MIN(ride_length),
     MAX(ride_length)
-FROM trip_2022_clean;
+FROM trip_2022_clean
+;
 ```
 
 ```sql
@@ -183,40 +197,368 @@ ORDER BY ride_length
 ;
 ```
 
-> Update data.
+* Update data
 ```sql
 -- remove 126449 rows which ride_length < 1min or > 24hr
+
 DELETE FROM trip_2022_clean
 WHERE 
     ride_length < '00:01:00'
-    OR ride_length > '24:00:00';
+    OR ride_length > '24:00:00'
+;
 ```
+
 ### 3.5 Handle missing data
-> Checking the missing values of all columns
+* Check the missing values of all columns
 ```sql
 -- 802104 null values of start_station_name, start_station_id
 -- 845268 null values of end_station_name, end_station_id
 -- 702 null values of end_lat, end_lng
 
 SELECT 
-    sum(isnull(ride_id)) ride_id,
-    sum(isnull(rideable_type)) rideable_type,
-    sum(isnull(started_at)) started_at,
-    sum(isnull(ended_at)) ended_at,
-    sum(isnull(start_station_name)) start_station_name,
-    sum(isnull(start_station_id)) start_station_id,
-    sum(isnull(end_station_name)) end_station_name,
-    sum(isnull(end_station_id)) end_station_id,
-    sum(isnull(start_lat)) start_lat,
-    sum(isnull(start_lng)) start_lng,
-    sum(isnull(end_lat)) end_lat,
-    sum(isnull(end_lng)) end_lng,
-    sum(isnull(member_casual)) member_casual
+    sum(isnull(ride_id)) AS ride_id,
+    sum(isnull(rideable_type)) AS rideable_type,
+    sum(isnull(started_at)) AS started_at,
+    sum(isnull(ended_at)) AS ended_at,
+    sum(isnull(start_station_name)) AS start_station_name,
+    sum(isnull(start_station_id)) AS start_station_id,
+    sum(isnull(end_station_name)) AS end_station_name,
+    sum(isnull(end_station_id)) AS end_station_id,
+    sum(isnull(start_lat)) AS start_lat,
+    sum(isnull(start_lng)) AS start_lng,
+    sum(isnull(end_lat)) AS end_lat,
+    sum(isnull(end_lng)) AS end_lng,
+    sum(isnull(member_casual)) AS member_casual
 FROM trip_2022_clean
 ;
 ```
+
+```sql
+-- if both end_station, end_lat & lng columns are null values,
+-- they are invalid data and can be deleted
+
+SELECT 
+    end_station_name,
+    end_station_id,
+    end_lat,
+    end_lng
+FROM trip_2022_clean
+WHERE 
+    end_station_name is NULL
+    AND end_station_id is NULL
+    AND end_lat is NULL
+    AND end_lng is NULL
+;
+```
+
+* Update data
+```sql
+-- 702 rows which both end_station, end_lat & lng are null values deleted
+
+DELETE FROM trip_2022_clean
+WHERE 
+    end_station_name is NULL
+    AND end_station_id is NULL
+    AND end_lat is NULL
+    AND end_lng is NULL
+;
+```
+
+* Check start_station_name, start_station_id wether are both null values
+```sql
+-- 802104 rows start_station_name & id are both null values, but still have start_lat & lng data
+
+SELECT 
+    start_station_name, 
+    start_station_id,
+    start_lat,
+    start_lng
+FROM trip_2022_clean
+WHERE
+    start_station_name IS NULL
+    AND start_station_id IS NULL
+;
+```
+
+* Based on start_lat & lng data, try to identify the missing start_station_name & id
+```sql
+-- check the max, min length of start lat & lng data which are start_station_name & id are null
+-- which means the precision of all start_lat & lng are only rounded 2 decimals or less
+
+SELECT
+    max(length(start_lat)), -- max 5, length including'.' sign
+    min(length(start_lat)), -- min 4, length including'.' sign
+    max(length(start_lng)), -- max 6, length including '-','.' sign
+    min(length(start_lng)) --  min 5, length including '-','.' sign
+FROM trip_2022_clean
+    WHERE start_station_name IS NULL
+    AND start_station_id IS NULL
+;
+
+-- total 802104 rows
+SELECT 
+    start_station_id,
+    start_lat, 
+    start_lng
+    FROM trip_2022_clean
+WHERE 	
+    start_station_name IS NULL
+    AND start_station_id IS NULL
+    AND length(start_lat) <= 5
+    AND length(start_lng) <= 6
+ORDER BY 2 DESC
+;
+```
+
+```sql
+-- find the start_station_id with the same start_lat & lng
+
+WITH not_null_station AS 
+(	
+    SELECT 
+        start_station_id,	
+        start_lat,
+        start_lng,
+        count(*) AS count
+        -- ROW_NUMBER() OVER (PARTITION BY start_lat, start_lng ORDER BY count(*) DESC) AS top
+    FROM trip_2022_clean
+    WHERE 
+        start_station_name IS NOT NULL
+        AND start_station_id IS NOT NULL
+        AND length(start_lat)  <= 5
+        AND length(start_lng)  <= 6
+    GROUP BY 2, 3, 1
+    ORDER BY 2, 3, 4 DESC
+)
+-- join null start_station_name & id and above CTE on same start_lat & lng 
+SELECT 
+    t.start_station_id AS n_start_station,
+    t.start_lat AS n_start_lat,
+    t.start_lng AS n_start_lng,
+    n.start_station_id,
+    n.start_lat,
+    n.start_lng,
+    count(*) AS n_count
+FROM trip_2022_clean AS t
+INNER JOIN not_null_station AS n
+    ON t.start_lat = n.start_lat
+    AND t.start_lng = n.start_lng
+WHERE t.start_station_name IS NULL
+AND t.start_station_id IS NULL
+GROUP BY 1, 2, 3, 4, 5, 6
+ORDER BY 2, 3, 7 DESC
+;
+
+-- after above qurey, we can't simply replace null station_id with start_station_id by the same start_lat & lng
+-- because the precision of 2 decimal places is too imprecise,
+-- many stations have the same lat & lng, we can't identify the specific start_station_name & id
+-- so the data are not satisfied to replace the null values, need to remove all
+```
+
+* Update data
+```sql
+-- 802104 rows removed
+
+DELETE FROM trip_2022_clean
+WHERE 
+    start_station_name is NULL
+    AND start_station_id is NULL
+;
+```
+
+* Handle with the missing data of end_station_name & id by the same ways\
+**MySQL query**: [02 Data clean](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/03_trip_2022_clean.sql)
+
 ### 3.6 Do type conversion
-### 3.7 Fix structural errors
+```sql
+-- check all the lat & lng length
+
+SELECT 
+    MAX(length(start_lat)),
+    MIN(length(start_lat)),
+    MAX(length(start_lng)),
+    MIN(length(start_lng)),
+    MAX(length(end_lat)),
+    MIN(length(end_lat)),
+    MAX(length(end_lng)),
+    MIN(length(end_lng))
+FROM trip_2022_clean
+;
+```
+
+* Update data
+```sql
+-- for geographic visulization only need 4 decimal places precision
+
+ALTER TABLE trip_2022_clean
+MODIFY COLUMN start_lat DECIMAL(6, 4),
+MODIFY COLUMN start_lng DECIMAL(7, 4),
+MODIFY COLUMN end_lat DECIMAL(6, 4),
+MODIFY COLUMN end_lng DECIMAL(7, 4)
+;
+```
+
+### 3.7 Fix ambiguities and errors
+* Check the start_station_name whether have the unique start_station_id
+```sql
+-- 1541 start_station_name
+-- 1263 start_station_id
+-- check distinct values which means some station_id has more than 1 names
+
+SELECT 
+    COUNT(DISTINCT trim(start_station_name)), 
+    COUNT(DISTINCT trim(start_station_id))
+FROM trip_2022_clean;
+```
+
+* Use window function also discover same start_station_id have lots of different lat & lng
+```sql
+SELECT 
+    start_station_id,
+    start_lat,
+    start_lng,
+    COUNT(*) AS no_rides,
+    ROW_NUMBER() OVER (PARTITION BY start_station_id ORDER BY count(*) DESC) AS top
+FROM trip_2022_clean
+GROUP BY 1, 2, 3
+ORDER BY 1 DESC, 4 DESC, 5
+;
+```
+
+* For viz requires each station has unique lat & lng
+```sql
+-- use start_station_id identify unique start_lat & lng by ranking 1 with the most rides 
+
+SELECT
+    s.start_station_id,
+    s.start_lat,
+    s.start_lng,
+    s.no_rides
+FROM 
+(
+    SELECT 
+        start_station_id,
+        start_lat,
+        start_lng,
+        count(*) AS no_rides,
+        -- Use PARTITION BY function to rank num of the lat & lng by each station_id
+        ROW_NUMBER() OVER (PARTITION BY start_station_id ORDER BY count(*) DESC) AS top
+    FROM trip_2022_clean
+    GROUP BY 1, 2, 3
+    ORDER BY 1, 4 DESC, 5
+) AS s
+-- Find the top 1 of each station_id which means the most accrate location
+WHERE s.top = 1
+ORDER BY 2, 3, 4 DESC
+;
+```
+
+* Update start_station_id by unique start_lat & lng of the most rides
+```sql
+-- transaction
+
+START TRANSACTION;
+
+UPDATE trip_2022_clean AS t
+JOIN 
+(
+    SELECT
+        s.start_station_id,
+        s.start_lat,
+        s.start_lng,
+        s.no_rides
+    FROM 
+    (
+        SELECT 
+            start_station_id,
+            start_lat,
+            start_lng,
+            count(*) AS no_rides,
+            -- Use PARTITION BY function to rank num of the lat & lng by each station_id
+            ROW_NUMBER() OVER (PARTITION BY start_station_id ORDER BY count(*) DESC) AS top
+        FROM trip_2022_clean
+        GROUP BY 1, 2, 3
+        ORDER BY 1, 4 DESC, 5
+    ) AS s
+	-- Find the top 1 of each station_id which means the most accrate location
+    WHERE s.top = 1
+    ORDER BY 2, 3, 4 DESC
+) AS i
+ON t.start_station_id = i.start_station_id
+SET t.start_lat = i.start_lat,
+    t.start_lng = i.start_lng
+;
+
+COMMIT;
+```
+
+* Check the start_station_id which have more than 1 name
+```sql
+-- 554 rows have 'no_id' > 1 group by start_station_name & id
+
+WITH start_stations AS
+(
+    SELECT 
+        start_station_name, 
+        start_station_id, 
+        COUNT(*) AS rides
+    FROM trip_2022_clean
+    GROUP BY 1 , 2
+    ORDER BY 3 DESC, 1
+),
+count_id AS
+(
+    SELECT
+        start_station_id, 
+        COUNT(*) AS no_id
+    FROM start_stations
+    GROUP BY 1
+    ORDER BY 2 DESC, 1 DESC
+)
+SELECT 
+    a.start_station_name,
+    a.start_station_id,
+    a.rides,
+    c.no_id
+FROM start_stations AS a
+INNER JOIN count_id AS c
+ON a.start_station_id = c.start_station_id
+WHERE c.no_id > 1
+ORDER BY 4 DESC, 2 DESC
+;
+```
+
+* Update start_station_name to the name of the most rides station by the same station_id
+```sql
+START TRANSACTION;
+
+UPDATE trip_2022_clean AS t
+JOIN 
+(
+    SELECT
+        s.start_station_name,
+        s.start_station_id
+    FROM 
+    (
+        SELECT 
+            start_station_name,
+            start_station_id,
+            count(*) AS no_rides,
+            -- Use PARTITION BY function to rank num of the lat & lng by each station_id
+            ROW_NUMBER() OVER (PARTITION BY start_station_id ORDER BY count(*) DESC) AS top
+        FROM trip_2022_clean
+        GROUP BY 1, 2
+        ORDER BY 2 DESC, 4, 3 DESC, 1
+    ) AS s
+    WHERE s.top = 1
+) AS i
+ON t.start_station_id = i.start_station_id
+SET t.start_station_name = i.start_station_name
+;
+
+COMMIT;
+```
+
 ### 3.8 Standardize/Normalize data
 ### 3.9 Validate data
 
