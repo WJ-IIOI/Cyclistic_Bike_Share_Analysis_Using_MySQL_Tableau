@@ -224,11 +224,13 @@ ORDER BY 2 DESC
 * Update data
 ```sql
 -- rename rideable_type column for more meaningful
+
 ALTER TABLE trip_2022_clean
 RENAME COLUMN rideable_type TO bike_type
 ;
 
 -- trim string values
+
 START TRANSACTION;
 
 UPDATE trip_2022_clean
@@ -241,6 +243,7 @@ COMMIT;
 
 ```sql
 -- check the distinct values in member_casual
+
 SELECT
     member_casual,
     count(*)
@@ -253,11 +256,13 @@ ORDER BY 2 DESC
 * Update data
 ```sql
 -- rename member_casual column for more meaningful
+
 ALTER TABLE trip_2022_clean
 RENAME COLUMN member_casual TO ride_type
 ;
 
 -- uppercase the first letter
+
 START TRANSACTION;
 
 UPDATE trip_2022_clean
