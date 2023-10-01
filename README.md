@@ -211,6 +211,7 @@ WHERE
 ### 3.5 Check string values
 ```sql
 -- check the distinct values in rideable_type column
+-- only 3 strings 'classic_bike', 'electric_bike', docked_bike
 
 SELECT 
     rideable_type,
@@ -242,7 +243,8 @@ COMMIT;
 
 
 ```sql
--- check the distinct values in member_casual
+-- check the distinct values in member_casual column
+-- only 2 strings with lowercase 'member', 'casual'
 
 SELECT
     member_casual,
