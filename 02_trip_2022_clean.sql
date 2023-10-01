@@ -8,25 +8,21 @@
 -- total 5667717 rows before cleaning as original table
 
 DROP TABLE IF EXISTS trip_2022_clean;
-CREATE TABLE IF NOT EXISTS trip_2022_clean AS 
-(	
-	SELECT 
-		ride_id,
-		rideable_type,
-		started_at,
-		ended_at,
-		TIMEDIFF(ended_at, started_at) AS ride_length,
-		start_station_name,
-        start_station_id,
-		end_station_name,
-        end_station_id,
-		start_lat,
-		start_lng,
-		end_lat,
-		end_lng,
-		member_casual
-		FROM trip_2022
-);   
+CREATE TABLE IF NOT EXISTS trip_2022_clean AS (SELECT ride_id,
+    rideable_type,
+    started_at,
+    ended_at,
+    TIMEDIFF(ended_at, started_at) AS ride_length,
+    start_station_name,
+    start_station_id,
+    end_station_name,
+    end_station_id,
+    start_lat,
+    start_lng,
+    end_lat,
+    end_lng,
+    member_casual FROM
+    trip_2022);
 
 -- ===================================================================
 -- 4.2 Check duplicate data
@@ -34,10 +30,11 @@ CREATE TABLE IF NOT EXISTS trip_2022_clean AS
 -- check duplicate rows by 'ride_id' column which is unique value 
 -- 0 null value and 0 duplicate
 
-SELECT
-	SUM(isnull(ride_id)) AS null_value,
+SELECT 
+    SUM(ISNULL(ride_id)) AS null_value,
     COUNT(*) - COUNT(DISTINCT ride_id) AS duplicate_rows
-FROM trip_2022_clean;
+FROM
+    trip_2022_clean;
 
 -- ===================================================================
 -- 4.3 Remove irrelevant data
@@ -46,9 +43,9 @@ FROM trip_2022_clean;
 -- all trips started in 2022 which means each trip record is relevant of 2022
 
 SELECT 
-    MIN(started_at),
-    MAX(started_at)
-FROM trip_2022_clean;
+    MIN(started_at), MAX(started_at)
+FROM
+    trip_2022_clean;
 
 -- ===================================================================
 -- 4.4 Deal with outliers and invalid data
@@ -59,39 +56,35 @@ FROM trip_2022_clean;
 -- any trip greater than 24 hrs are considered invalid outliers that are taken by staff as they service and inspect the system
 
 SELECT 
-    MIN(ride_length),
-    MAX(ride_length)
-FROM trip_2022_clean;
+    MIN(ride_length), MAX(ride_length)
+FROM
+    trip_2022_clean;
 
-SELECT
-	started_at,
-    ended_at,
-	ride_length
-FROM trip_2022_clean
-WHERE 
-	ride_length < '00:01:00'
-    OR ride_length > '24:00:00'
+SELECT 
+    started_at, ended_at, ride_length
+FROM
+    trip_2022_clean
+WHERE
+    ride_length < '00:01:00'
+        OR ride_length > '24:00:00'
 ORDER BY ride_length
 ;
 
 -- remove 126449 rows which ride_length < 1min or > 24hr
-DELETE FROM trip_2022_clean
-WHERE 
-	ride_length < '00:01:00'
-	OR ride_length > '24:00:00';
+DELETE FROM trip_2022_clean 
+WHERE
+    ride_length < '00:01:00'
+    OR ride_length > '24:00:00';
 
 
 -- ===================================================================
 -- 4.5 Check string values
 -- -------------------------------------------------------------------
 
--- check the distinct values in rideable_type column
--- only 3 values 'classic_bike', 'electric_bike', docked_bike
-
-SELECT
-	rideable_type,
-	count(*)
-FROM trip_2022_clean
+SELECT 
+    rideable_type, COUNT(*)
+FROM
+    trip_2022_clean
 GROUP BY 1
 ORDER BY 2 DESC
 ;
@@ -104,25 +97,22 @@ RENAME COLUMN rideable_type TO bike_type
 -- trim string values
 START TRANSACTION;
 
-UPDATE trip_2022_clean
-SET bike_type = trim('_bike' FROM bike_type)
+UPDATE trip_2022_clean 
+SET 
+    bike_type = TRIM('_bike' FROM bike_type)
 ;
 
 COMMIT;
 
 -- -------------------------------------------------------------------
 
--- check the distinct values in member_casual column
--- only 2 values with lowercase 'member', 'casual'
-
-SELECT
-	member_casual,
-	count(*)
-FROM trip_2022_cleaned
+SELECT 
+    member_casual, COUNT(*)
+FROM
+    trip_2022_cleaned
 GROUP BY 1
 ORDER BY 2 DESC
 ;
-
 
 -- rename member_casual column for more meaningful
 
@@ -134,8 +124,10 @@ RENAME COLUMN member_casual TO ride_type
 
 START TRANSACTION;
 
-UPDATE trip_2022_clean
-SET ride_type = CONCAT(UPPER(SUBSTRING(ride_type, 1, 1)), LOWER(SUBSTRING(ride_type, 2)))
+UPDATE trip_2022_clean 
+SET 
+    ride_type = CONCAT(UPPER(SUBSTRING(ride_type, 1, 1)),
+            LOWER(SUBSTRING(ride_type, 2)))
 ;
 
 COMMIT;
@@ -150,99 +142,98 @@ COMMIT;
 -- 702 null values of end_lat, end_lng
 
 SELECT 
-	sum(isnull(ride_id)) ride_id,
-	sum(isnull(bike_type)) rideable_type,
-    sum(isnull(started_at)) started_at,
-    sum(isnull(ended_at)) ended_at,
-    sum(isnull(start_station_name)) start_station_name,
-    sum(isnull(start_station_id)) start_station_id,
-    sum(isnull(end_station_name)) end_station_name,
-    sum(isnull(end_station_id)) end_station_id,
-    sum(isnull(start_lat)) start_lat,
-    sum(isnull(start_lng)) start_lng,
-    sum(isnull(end_lat)) end_lat,
-    sum(isnull(end_lng)) end_lng,
-    sum(isnull(ride_type)) member_casual
-FROM trip_2022_clean
+    SUM(ISNULL(ride_id)) ride_id,
+    SUM(ISNULL(bike_type)) rideable_type,
+    SUM(ISNULL(started_at)) started_at,
+    SUM(ISNULL(ended_at)) ended_at,
+    SUM(ISNULL(start_station_name)) start_station_name,
+    SUM(ISNULL(start_station_id)) start_station_id,
+    SUM(ISNULL(end_station_name)) end_station_name,
+    SUM(ISNULL(end_station_id)) end_station_id,
+    SUM(ISNULL(start_lat)) start_lat,
+    SUM(ISNULL(start_lng)) start_lng,
+    SUM(ISNULL(end_lat)) end_lat,
+    SUM(ISNULL(end_lng)) end_lng,
+    SUM(ISNULL(ride_type)) member_casual
+FROM
+    trip_2022_clean
 ;
 
 -- if both end_station and end_lat & lng columns are null values
 -- they are invalid data and can be deleted
 
 SELECT 
-	end_station_name,
-    end_station_id,
-	end_lat,
-	end_lng
-FROM trip_2022_clean
-WHERE 
-	end_station_name is NULL
-    AND end_station_id is NULL
-	AND end_lat is NULL
-	AND end_lng is NULL
+    end_station_name, end_station_id, end_lat, end_lng
+FROM
+    trip_2022_clean
+WHERE
+    end_station_name IS NULL
+        AND end_station_id IS NULL
+        AND end_lat IS NULL
+        AND end_lng IS NULL
 ;
 
 -- 702 end_lat & lng rows of invalid null data deleted
 
-DELETE FROM trip_2022_clean
-WHERE 
-	end_station_name is NULL
-    AND end_station_id is NULL
-	AND end_lat is NULL
-	AND end_lng is NULL
+DELETE FROM trip_2022_clean 
+WHERE
+    end_station_name IS NULL
+    AND end_station_id IS NULL
+    AND end_lat IS NULL
+    AND end_lng IS NULL
 ;
     
 -- -------------------------------------------------------------------
 -- check start_station_name, start_station_id wether are both null values
 -- 802104 rows start_station_name & id are both null values, but still have start_lat & lng data
 SELECT 
-    start_station_name, 
-    start_station_id,
-    start_lat,
-    start_lng
-FROM trip_2022_clean
+    start_station_name, start_station_id, start_lat, start_lng
+FROM
+    trip_2022_clean
 WHERE
     start_station_name IS NULL
-    AND start_station_id IS NULL
+        AND start_station_id IS NULL
 ;
 
 -- based on start_lat & lng data, we can identify the miss start_station_name & id
 -- check the max, min length of start lat & lng data which are start_station_name & id are null
-SELECT
-	max(length(start_lat)), -- max 5, length including'.' sign
-    min(length(start_lat)), -- min 4, length including'.' sign
-	max(length(start_lng)), -- max 6, length including '-','.' sign
-    min(length(start_lng)) --  min 5, length including '-','.' sign
-FROM trip_2022_clean
-WHERE start_station_name IS NULL
-	AND start_station_id IS NULL
+SELECT 
+    MAX(LENGTH(start_lat)),
+    MIN(LENGTH(start_lat)),
+    MAX(LENGTH(start_lng)),
+    MIN(LENGTH(start_lng))
+FROM
+    trip_2022_clean
+WHERE
+    start_station_name IS NULL
+        AND start_station_id IS NULL
 ;
 
 -- check the max, min length of start lat & lng data which are not null
-SELECT
-	max(length(start_lat)), -- max 18, length including'.' sign
-    min(length(start_lat)), -- min 4, length including'.' sign
-	max(length(start_lng)), -- max 18, length including '-','.' sign
-    min(length(start_lng)) -- min 5, length including '-','.' sign
-FROM trip_2022_clean
-WHERE start_station_name IS NOT NULL
-	AND start_station_id IS NOT NULL
+SELECT 
+    MAX(LENGTH(start_lat)),
+    MIN(LENGTH(start_lat)),
+    MAX(LENGTH(start_lng)),
+    MIN(LENGTH(start_lng))
+FROM
+    trip_2022_clean
+WHERE
+    start_station_name IS NOT NULL
+        AND start_station_id IS NOT NULL
 ;
 
 -- check the max, min length of start lat & lng data which are start_station_name & id are null
 -- which means the precision of all start_lat & lng are only rounded 2 decimals or less
 
--- total 802104 rows
 SELECT 
-    start_station_id,
-	start_lat, 
-    start_lng
-FROM trip_2022_clean
-WHERE 	
+    start_station_id, start_lat, start_lng
+FROM
+    trip_2022_clean
+WHERE
     start_station_name IS NULL
-	AND start_station_id IS NULL
-    AND length(start_lat) <= 5
-    AND length(start_lng) <= 6
+        AND start_station_id IS NULL
+        AND LENGTH(start_lat) <= 5
+        AND LENGTH(start_lng) <= 6
 ORDER BY 2 DESC
 ;
 
@@ -288,126 +279,122 @@ ORDER BY 2, 3, 7 DESC
 -- many stations have the same lat & lng, we can't identify the specific start_station_name & id
 -- so the data are not satisfied to replace the null values, need to remove all
 
--- 802104 rows removed
-
-DELETE FROM trip_2022_clean
-WHERE 
-	start_station_name is NULL
-    AND start_station_id is NULL
+DELETE FROM trip_2022_clean 
+WHERE
+    start_station_name IS NULL
+    AND start_station_id IS NULL
 ;
 
 -- -------------------------------------------------------------------
 -- same as null end_station_name & id rows
 -- remian 445909 rows are same as null values, but still have start_lat & lng data
 SELECT 
-    end_station_name, 
-    end_station_id,
-    end_lat,
-    end_lng
-FROM trip_2022_clean
+    end_station_name, end_station_id, end_lat, end_lng
+FROM
+    trip_2022_clean
+WHERE
+    end_station_name IS NULL
+        AND end_station_id IS NULL
+;
+
+-- check the max, min length of end lat & lng data which are null
+SELECT 
+    MAX(LENGTH(end_lat)),
+    MIN(LENGTH(end_lat)),
+    MAX(LENGTH(end_lng)),
+    MIN(LENGTH(end_lng))
+FROM
+    trip_2022_clean
+WHERE
+    end_station_name IS NULL
+        AND end_station_id IS NULL
+;
+
+-- check the max, min length of end lat & lng data which are not null
+SELECT 
+    MAX(LENGTH(end_lat)),
+    MIN(LENGTH(end_lat)),
+    MAX(LENGTH(end_lng)),
+    MIN(LENGTH(end_lng))
+FROM
+    trip_2022_clean
+WHERE
+    end_station_name IS NOT NULL
+        AND end_station_id IS NOT NULL
+;
+
+-- the precision of null end_lat & lng are all only rounded 2 decimals or less
+SELECT 
+    end_station_id, end_lat, end_lng
+FROM
+    trip_2022_clean
+WHERE
+    end_station_name IS NULL
+        AND end_station_id IS NULL
+        AND LENGTH(end_lat) <= 5
+        AND LENGTH(end_lng) <= 6
+ORDER BY 2 DESC
+;
+
+-- 445909 rows same as end_station_name & id rows removed
+DELETE FROM trip_2022_clean 
 WHERE
     end_station_name IS NULL
     AND end_station_id IS NULL
 ;
 
--- check the max, min length of end lat & lng data which are null
-SELECT
-	max(length(end_lat)), -- max 5, length including'.' sign
-    min(length(end_lat)), -- min 4, length including'.' sign
-	max(length(end_lng)), -- max 6, length including '-','.' sign
-    min(length(end_lng)) --  min 5, length including '-','.' sign
-FROM trip_2022_clean
-WHERE end_station_name IS NULL
-	AND end_station_id IS NULL
-;
-
--- check the max, min length of end lat & lng data which are not null
-SELECT
-	max(length(end_lat)), -- max 18, length including'.' sign
-    min(length(end_lat)), -- min 3, length including'.' sign
-	max(length(end_lng)), -- max 18, length including '-','.' sign
-    min(length(end_lng)) -- min 3, length including '-','.' sign
-FROM trip_2022_clean
-WHERE end_station_name IS NOT NULL
-	AND end_station_id IS NOT NULL
-;
-
--- the precision of null end_lat & lng are all only rounded 2 decimals or less
-SELECT 
-    end_station_id,
-	end_lat, 
-    end_lng
-FROM trip_2022_clean
-WHERE 	
-    end_station_name IS NULL
-	AND end_station_id IS NULL
-    AND length(end_lat) <= 5
-    AND length(end_lng) <= 6
-ORDER BY 2 DESC
-;
-
--- 445909 rows same as end_station_name & id rows removed
-DELETE FROM trip_2022_clean
-WHERE 
-	end_station_name is NULL
-    AND end_station_id is NULL
-;
-
 -- check the min length of end_lat & lng which = 3
 SELECT 
-	end_station_name,
-    end_station_id,
-    end_lat,
-    end_lng,
-    count(*)
-FROM trip_2022_clean
-GROUP BY 1, 2, 3, 4
-HAVING min(length(end_lat)) = 3
-	OR min(length(end_lng)) = 3
+    end_station_name, end_station_id, end_lat, end_lng, COUNT(*)
+FROM
+    trip_2022_clean
+GROUP BY 1 , 2 , 3 , 4
+HAVING MIN(LENGTH(end_lat)) = 3
+    OR MIN(LENGTH(end_lng)) = 3
 ;
 
 -- remove the end_lat & lng which = 0
-DELETE FROM trip_2022_clean
-WHERE end_lat = '0.0'
-	OR end_lng = '0.0'
+DELETE FROM trip_2022_clean 
+WHERE
+    end_lat = '0.0' OR end_lng = '0.0'
 ;
 
 -- all null values had handled
 -- remian 4292546 rows
-SELECT
-	count(*),
-	sum(isnull(ride_id)) ride_id,
-	sum(isnull(bike_type)) rideable_type,
-    sum(isnull(started_at)) started_at,
-    sum(isnull(ended_at)) ended_at,
-    sum(isnull(start_station_name)) start_station_name,
-    sum(isnull(start_station_id)) start_station_id,
-    sum(isnull(end_station_name)) end_station_name,
-    sum(isnull(end_station_id)) end_station_id,
-    sum(isnull(start_lat)) start_lat,
-    sum(isnull(start_lng)) start_lng,
-    sum(isnull(end_lat)) end_lat,
-    sum(isnull(end_lng)) end_lng,
-    sum(isnull(ride_type)) member_casual
-FROM trip_2022_clean
+SELECT 
+    COUNT(*),
+    SUM(ISNULL(ride_id)) ride_id,
+    SUM(ISNULL(bike_type)) rideable_type,
+    SUM(ISNULL(started_at)) started_at,
+    SUM(ISNULL(ended_at)) ended_at,
+    SUM(ISNULL(start_station_name)) start_station_name,
+    SUM(ISNULL(start_station_id)) start_station_id,
+    SUM(ISNULL(end_station_name)) end_station_name,
+    SUM(ISNULL(end_station_id)) end_station_id,
+    SUM(ISNULL(start_lat)) start_lat,
+    SUM(ISNULL(start_lng)) start_lng,
+    SUM(ISNULL(end_lat)) end_lat,
+    SUM(ISNULL(end_lng)) end_lng,
+    SUM(ISNULL(ride_type)) member_casual
+FROM
+    trip_2022_clean
 ;
 
 -- ===================================================================
 -- 4.7 Do type conversion
 -- -------------------------------------------------------------------
 
--- check all the lat & lng length
--- for geographic visulization only need 4 decimal places precision
 SELECT 
-	MAX(length(start_lat)),
-	MIN(length(start_lat)),
-	MAX(length(start_lng)),
-    MIN(length(start_lng)),
-	MAX(length(end_lat)),
-    MIN(length(end_lat)),
-	MAX(length(end_lng)),
-    MIN(length(end_lng))
-FROM trip_2022_clean
+    MAX(LENGTH(start_lat)),
+    MIN(LENGTH(start_lat)),
+    MAX(LENGTH(start_lng)),
+    MIN(LENGTH(start_lng)),
+    MAX(LENGTH(end_lat)),
+    MIN(LENGTH(end_lat)),
+    MAX(LENGTH(end_lng)),
+    MIN(LENGTH(end_lng))
+FROM
+    trip_2022_clean
 ;
 
 -- convert start_lat & end_lat as DECIMAL(6, 4)
@@ -429,17 +416,11 @@ MODIFY COLUMN end_lng DECIMAL(7, 4)
 -- ORDER BY 1, 2, 3, 4
 -- ;
 
--- ===================================================================
--- 4.8 Fix ambiguous data and business Logic
--- -------------------------------------------------------------------
-
--- check distinct values which means some station_id has more than 1 names
--- 1541 start_station_name
--- 1263 start_station_id
 SELECT 
-	COUNT(DISTINCT trim(start_station_name)), 
-	COUNT(DISTINCT trim(start_station_id))
-FROM trip_2022_clean;
+    COUNT(DISTINCT TRIM(start_station_name)),
+    COUNT(DISTINCT TRIM(start_station_id))
+FROM
+    trip_2022_clean;
 
 -- Use window function also discover some start_station_id have lots of different lat & lng
 -- 31478 rows, indicating many start_station_id also has more than 1 start_lat & lng
@@ -583,13 +564,11 @@ COMMIT;
 -- -------------------------------------------------------------------
 -- Handle with ambiguities and errors of end_station_name & id by the same ways
 
--- check distinct values which means some station_id has more than 1 names
--- 1583 end_station_name
--- 1275 end_station_id
 SELECT 
-	COUNT(DISTINCT trim(end_station_name)), 
-	COUNT(DISTINCT trim(end_station_id))
-FROM trip_2022_clean;
+    COUNT(DISTINCT TRIM(end_station_name)),
+    COUNT(DISTINCT TRIM(end_station_id))
+FROM
+    trip_2022_clean;
 
 -- Use window function also discover some end_station_id have lots of different lat & lng
 -- 1626 rows, indicating many end_station_id also has more than 1 start_lat & lng
