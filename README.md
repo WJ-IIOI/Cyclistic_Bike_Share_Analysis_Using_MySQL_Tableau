@@ -111,11 +111,11 @@ After above, it's ready for PROCESS.\
 * 3.2. [Remove duplicate data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#32--remove-duplicate-data)
 * 3.3. [Remove irrelevant data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#33-remove-irrelevant-data)
 * 3.4. [Deal with outliers and invalid data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#34-deal-with-outliers-and-invalid-data)
-* 3.5. [Handle missing data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#35-handle-missing-data)
-* 3.6. [Do type conversion](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#36-do-type-conversion)
-* 3.7. [Fix ambiguities and errors](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#37-fix-ambiguities-and-errors)
-* 3.8.
-* 3.9.
+* 3.5. [Check string values](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#35-check-string-values)
+* 3.6. [Handle missing data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#36-handle-missing-data)
+* 3.7. [Do type conversion](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#37-do-type-conversion)
+* 3.8. [Fix ambiguities and errors](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#38-fix-ambiguities-and-errors)
+* 3.9. [Data-cleaning verification](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#39-Data-cleaning-verification)
 
 ### 3.1 Backup data for cleaning
 ```sql
@@ -208,7 +208,66 @@ WHERE
 ;
 ```
 
-### 3.5 Handle missing data
+### 3.5 Check string values
+```sql
+-- check the distinct values in rideable_type column
+
+SELECT 
+    rideable_type,
+    count(*)
+FROM trip_2022_clean
+GROUP BY 1
+ORDER BY 2 DESC
+;
+```
+
+* Update data
+```sql
+-- rename rideable_type column for more meaningful
+ALTER TABLE trip_2022_clean
+RENAME COLUMN rideable_type TO bike_type
+;
+
+-- trim string values
+START TRANSACTION;
+
+UPDATE trip_2022_clean
+SET bike_type = trim('_bike' FROM bike_type)
+;
+
+COMMIT;
+```
+
+
+```sql
+-- check the distinct values in member_casual
+SELECT
+    member_casual,
+    count(*)
+FROM trip_2022_clean
+GROUP BY 1
+ORDER BY 2 DESC
+;
+```
+
+* Update data
+```sql
+-- rename member_casual column for more meaningful
+ALTER TABLE trip_2022_clean
+RENAME COLUMN member_casual TO ride_type
+;
+
+-- uppercase the first letter
+START TRANSACTION;
+
+UPDATE trip_2022_clean
+SET ride_type = CONCAT(UPPER(SUBSTRING(ride_type, 1, 1)), LOWER(SUBSTRING(ride_type, 2)))
+;
+
+COMMIT;
+```
+
+### 3.6 Handle missing data
 * Check the missing values of all columns
 ```sql
 -- 802104 null values of start_station_name, start_station_id
@@ -369,7 +428,7 @@ WHERE
 * Handle with the missing data of end_station_name & id by the same ways\
 **MySQL query**: [02 Data clean](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/03_trip_2022_clean.sql)
 
-### 3.6 Do type conversion
+### 3.7 Do type conversion
 ```sql
 -- check all the lat & lng length
 
@@ -398,7 +457,7 @@ MODIFY COLUMN end_lng DECIMAL(7, 4)
 ;
 ```
 
-### 3.7 Fix ambiguities and errors
+### 3.8 Fix ambiguities and errors
 * Check the start_station_name whether have the unique start_station_id
 ```sql
 -- 1541 start_station_name
@@ -427,7 +486,7 @@ ORDER BY 1 DESC, 4 DESC, 5
 
 * For viz requires each station has unique lat & lng
 ```sql
--- use start_station_id identify unique start_lat & lng by ranking 1 with the most rides 
+-- use start_station_id to identify unique start_lat & lng by ranking 1 with the most rides 
 
 SELECT
     s.start_station_id,
@@ -559,8 +618,23 @@ SET t.start_station_name = i.start_station_name
 COMMIT;
 ```
 
-### 3.8 Standardize/Normalize data
-### 3.9 Validate data
+* Handle with ambiguities and errors of end_station_name & id by the same ways\
+**MySQL query**: [02 Data clean](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/03_trip_2022_clean.sql)
+
+### 3.9 Data-cleaning verification
+Verifying the cleaned data ensures that the insights you gain from analysis can be trusted:
+* **Checked duplicate data** — the data does not have duplicate values
+* **Checked irrelevant data** — each trip record is relevant of 2022
+* **Checked outliers** — removed outliers which ride_length < 1min or > 24hr
+* **Checked missing values** — removed some data with missing values
+* **Checked Date-Time format** — the date and time is consistent
+* **Checked business Logic** — fix ambiguous data and business Logic 
+* **Checked data formats** — the columns are accurate in format
+* **Checked data consistency** — after cleaning up the data, the data for the 12 months remained consistent
+* **Checked integrity** — the data is appropriate to answer the business questions
+
+Now, the data is clean, accurate, consistent, complete and ready for ANALYSIS.
+
 
 ## **STEP 4 ANALYZE – Find the insights**
 
