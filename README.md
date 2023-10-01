@@ -433,7 +433,7 @@ WHERE
 ```
 
 * Handle with the missing data of end_station_name & id by the same ways\
-**MySQL query**: [02 Data clean](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/03_trip_2022_clean.sql)
+**MySQL query**: [02 Data clean](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/02_trip_2022_clean.sql)
 
 ### 3.7 Do type conversion
 ```sql
@@ -626,7 +626,7 @@ COMMIT;
 ```
 
 * Handle with ambiguities and errors of end_station_name & id by the same ways\
-**MySQL query**: [02 Data clean](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/03_trip_2022_clean.sql)
+**MySQL query**: [02 Data clean](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/blob/main/02_trip_2022_clean.sql)
 
 ### 3.9 Data-cleaning verification
 Verifying the cleaned data ensures that the insights you gain from analysis can be trusted:
