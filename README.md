@@ -45,8 +45,8 @@ There are three questions that will guide this future marketing program.
 By looking at the data, we will be able to first get a broad sense of certain patterns that are occurring in the two different groups. Understanding the differences will provide more accurate customer profiles for each group. These insights will help the marketing analyst team design high quality targeted marketing for converting casual riders into members. For the executive team, these insights will help Cyclistic maximize the number of annual members and will fuel future growth for the company.
 
 ### 1.2 Business task
-*	Analyze historical bike trip data to identify trends in how annual members and casual riders use Cyclistic bikes differently.
-*	Design marketing strategies aimed at converting casual riders to members.
+* Analyze historical bike trip data to identify trends in how annual members and casual riders use Cyclistic bikes differently.
+* Design marketing strategies aimed at converting casual riders to members.
 
 ### 1.3 Identify key stakeholders
 * **The director of marketing** who is responsible for the development of campaigns and initiatives to promote the bike-share program.
@@ -644,6 +644,96 @@ Now, the data is clean, accurate, consistent, complete and ready for ANALYSIS.
 
 
 ## **STEP 4 ANALYZE – Find the insights**
+At this step, for better answering the business task, I will use MySQL for data analysis, and then use Tableau for visualization.
+I will identify trends in how annual members and casual riders use Cyclistic bikes differently by analyzing the following:
+* Number and proportion by user type
+* Number and proportion by bike type
+* Average of ride length by user type
+* Distribution of ride length by user type
+* Distribution of stations by user type
+* Analyzing by year, month, weekday and hour respectively
+### 4.1 Analyze number and proportion by user type
+```sql
+-- caculate number and proportion by year
+SELECT 
+    user_type,
+    COUNT(*) AS rides,
+    ROUND((COUNT(*) / (SELECT COUNT(*) FROM trip_2022_clean)) * 100, 2) AS pct
+FROM trip_2022_clean
+GROUP BY 1
+;
+```
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
+
+```sql
+-- caculate number and proportion by month
+SELECT 
+    EXTRACT(MONTH FROM started_at) AS month,
+    user_type,
+    COUNT(*) AS rides,
+    ROUND((COUNT(*) / (SELECT COUNT(*) FROM trip_2022_clean)) * 100, 2) AS pct
+FROM trip_2022_clean
+GROUP BY 1 , 2
+;
+```
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
+
+```sql
+-- caculate number and proportion by weekday
+SELECT 
+    WEEKDAY(started_at) AS weekday,
+    user_type,
+    COUNT(*) AS rides,
+    ROUND((COUNT(*) / (SELECT COUNT(*) FROM trip_2022_clean)) * 100, 2) AS pct
+FROM trip_2022_clean
+GROUP BY 1 , 2
+ORDER BY 1 , 2
+;
+```
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
+
+```sql
+-- caculate number and proportion by hour
+SELECT 
+    HOUR(started_at) AS hour,
+    user_type,
+    COUNT(*) AS rides,
+    ROUND((COUNT(*) / (SELECT COUNT(*) FROM trip_2022_clean)) * 100, 2) AS pct
+FROM trip_2022_clean
+GROUP BY 1 , 2
+ORDER BY 1 , 2
+;
+```
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
+
+> **Key insights:**
+* 123
+* 345
+
+### 4.2 Caculate number and proportion by bike type
+```sql
+-- caculate number and proportion by year
+SELECT 
+    bike_type,
+    user_type,
+    COUNT(*) AS rides,
+    ROUND((COUNT(*) / (SELECT COUNT(*) FROMntrip_2022_clean)) * 100, 2) AS pct
+FROM trip_2022_clean
+GROUP BY 1 , 2
+ORDER BY 3 DESC
+;
+```
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
+
+> **Key insights:**
+* 123
+* 345
+* 
+### 4.3 Analyze average of ride length by user type
+### 4.4 Analyze distribution of ride length by user type
+### 4.5 Analyze distribution of stations by user type
+
+
 
 
 ## **STEP 5 SHARE –  Visualizing findings**
