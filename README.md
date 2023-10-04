@@ -114,7 +114,7 @@ After above, it's ready for PROCESS.\
 * 3.5. [Check string values](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#35-check-string-values)
 * 3.6. [Handle missing data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#36-handle-missing-data)
 * 3.7. [Do type conversion](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#37-do-type-conversion)
-* 3.8. [Fix ambiguities and errors](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#38-fix-ambiguities-and-errors)
+* 3.8. [Fix ambiguities and business logic](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#38-fix-ambiguities-and-business-logic)
 * 3.9. [Data-cleaning verification](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#39-Data-cleaning-verification)
 
 ### 3.1 Backup data for cleaning
@@ -464,12 +464,16 @@ MODIFY COLUMN end_lng DECIMAL(7, 4)
 ;
 ```
 
-### 3.8 Fix ambiguities and errors
-* Check the start_station_name whether have the unique start_station_id
+### 3.8 Fix ambiguities and business logic
+* In order to analyze the distribution of users by every station, we need an accurate latitude and longitude for each station to use them in visual map.
+* However, each station does not have a unique value. The data in the **_start_lat_** and **_start_lng_** columns correspond to the latitude and longitude of the start and end of each ride.
+* Digging deeper, I found that the **_start_lat_** and **_start_lng_** of the rides at the same station are very close. Most of them are based on the parking position when unlocking and locking, so there is not much difference.
+* In addition, most stations have one data with a particularly large number of rides, so they can be considered as the exact Latitude and longitude of the station and can be used in the map visualization.
+
 ```sql
+-- checked distinct values which means some station_id has more than 1 names
 -- 1541 start_station_name
 -- 1263 start_station_id
--- check distinct values which means some station_id has more than 1 names
 
 SELECT 
     COUNT(DISTINCT trim(start_station_name)), 
@@ -519,7 +523,7 @@ ORDER BY 2, 3, 4 DESC
 ;
 ```
 
-* Update start_station_id by unique start_lat & lng of the most rides
+* Update the start_lat & lng of the same start_station_id by the start_lat & lng of the most rides
 ```sql
 -- transaction
 
@@ -635,7 +639,7 @@ Verifying the cleaned data ensures that the insights you gain from analysis can 
 * **Checked outliers** — removed outliers which ride_length < 1min or > 24hr
 * **Checked missing values** — removed some data with missing values
 * **Checked Date-Time format** — the date and time is consistent
-* **Checked business Logic** — fix ambiguous data and business Logic 
+* **Checked business logic** — fix ambiguous data and business Logic 
 * **Checked data formats** — the columns are accurate in format
 * **Checked data consistency** — after cleaning up the data, the data for the 12 months remained consistent
 * **Checked integrity** — the data is appropriate to answer the business questions
@@ -646,13 +650,13 @@ Now, the data is clean, accurate, consistent, complete and ready for ANALYSIS.
 ## **STEP 4 ANALYZE – Find the insights**
 At this step, for better answering the business task, I will use MySQL for data analysis, and then use Tableau for visualization.
 I will identify trends in how annual members and casual riders use Cyclistic bikes differently by analyzing the following:
-* Number and proportion by user type
-* Number and proportion by bike type
-* Average of ride length by user type
-* Distribution of ride length by user type
-* Distribution of stations by user type
-* Analyzing by year, month, weekday and hour respectively
-### 4.1 Analyze number and proportion by user type
+* 4.1. [Number and proportion by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#41-analyze-number-and-proportion-by-user-type)
+* 4.2. [Number and proportion by bike type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#42-caculate-number-and-proportion-by-bike-type)
+* 4.3. [Average of ride length by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#43-analyze-average-of-ride-length-by-user-type)
+* 4.4. [Distribution of ride length by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#44-analyze-distribution-of-ride-length-by-user-type)
+* 4.5. [Distribution of stations by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#45-analyze-distribution-of-stations-by-user-type)
+* 4.6. [Export data for visulization](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#46-Export-data-for-visulization)
+### 4.1 Analyze the number and proportion by user type
 ```sql
 -- caculate number and proportion by year
 SELECT 
@@ -710,7 +714,7 @@ ORDER BY 1 , 2
 * 123
 * 345
 
-### 4.2 Caculate number and proportion by bike type
+### 4.2 Caculate the number and proportion by bike type
 ```sql
 -- caculate number and proportion by year
 SELECT 
@@ -729,11 +733,96 @@ ORDER BY 3 DESC
 * 123
 * 345
 * 
-### 4.3 Analyze average of ride length by user type
-### 4.4 Analyze distribution of ride length by user type
-### 4.5 Analyze distribution of stations by user type
+### 4.3 Analyze the average of ride length by user type
+```sql
+-- caculate AVG ride_length of all rides 
+-- 17.3 mins
+SELECT 
+    ROUND(MAX(TIME_TO_SEC(ride_length) / 60), 1) AS max_len,
+    ROUND(MIN(TIME_TO_SEC(ride_length) / 60), 1) AS min_len,
+    ROUND(AVG(TIME_TO_SEC(ride_length) / 60), 1) AS avg_len
+FROM trip_2022_clean
+;
+
+-- caculate AVG ride_length of user type by 3 methods
+SELECT 
+    user_type,
+    ROUND(AVG(TIME_TO_SEC(ride_length) / 60), 1) AS avg_len,
+    SEC_TO_TIME(ROUND(AVG(TIME_TO_SEC(ride_length)), 0)) AS avg_len_time,
+    TIME_FORMAT(SEC_TO_TIME(AVG(TIME_TO_SEC(ride_length))), '%H:%i:%s') AS avg_len_format
+FROM trip_2022_clean
+GROUP BY 1
+;
+```
+
+> **Key insights:**
+* Average ride_length of all rides is 17.3 minutes
+*
+*
+
+### 4.4 Analyze the distribution of ride length by user type
+```sql
+-- use case clause to aggregate distribution of ride length 
+SELECT 
+    user_type,
+    (CASE
+        WHEN ride_length <= 500 THEN '5min'
+        WHEN ride_length > 500 AND ride_length <= 1000 THEN '10min'
+        WHEN ride_length > 1000 AND ride_length <= 2000 THEN '20min'
+        WHEN ride_length > 2000 AND ride_length <= 3000 THEN '30min'
+        WHEN ride_length > 3000 AND ride_length <= 4000 THEN '40min'
+        WHEN ride_length > 4000 AND ride_length <= 5000 THEN '50min'
+        ELSE '60min'
+    END) AS mins,
+    COUNT(*) AS rides,
+    ROUND((COUNT(*) / (SELECT COUNT(*) FROM trip_2022_clean)) * 100, 2) AS pct
+FROM trip_2022_clean
+GROUP BY 1 , 2
+ORDER BY 2 , 1
+;
+```
 
 
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
+
+> **Key insights:**
+* Most member ride length < 20 min 
+* Most casual 
+*
+
+### 4.5 Analyze the distribution of stations by user type
+
+
+
+
+
+### 4.6 Export data for visulization
+```sql
+-- Export data to CSV file fast with command lines 
+SELECT 
+    'ride_id',
+    'bike_type',
+    'started_at',
+    'ended_at',
+    'ride_length',
+    'start_station_name',
+    'start_station_id',
+    'end_station_name',
+    'end_station_id',
+    'start_lat',
+    'start_lng',
+    'end_lat',
+    'end_lng',
+    'user_type'
+UNION ALL 
+SELECT *
+FROM trip_2022_clean 
+INTO OUTFILE 'path/trip_2022_final.csv' 
+FIELDS TERMINATED BY ',' 
+OPTIONALLY ENCLOSED BY '"' 
+LINES TERMINATED BY ''
+;
+```
 
 
 ## **STEP 5 SHARE –  Visualizing findings**
