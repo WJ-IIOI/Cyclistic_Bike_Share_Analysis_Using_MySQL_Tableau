@@ -650,11 +650,11 @@ Now, the data is clean, accurate, consistent, complete and ready for ANALYSIS.
 ## **STEP 4 ANALYZE – Find the insights**
 At this step, for better answering the business task, I will use MySQL for data analysis, and then use Tableau for visualization.
 I will identify trends in how annual members and casual riders use Cyclistic bikes differently by analyzing the following:
-* 4.1. [Number and proportion by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#41-analyze-number-and-proportion-by-user-type)
-* 4.2. [Number and proportion by bike type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#42-caculate-number-and-proportion-by-bike-type)
-* 4.3. [Average of ride length by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#43-analyze-average-of-ride-length-by-user-type)
-* 4.4. [Distribution of ride length by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#44-analyze-distribution-of-ride-length-by-user-type)
-* 4.5. [Distribution of stations by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#45-analyze-distribution-of-stations-by-user-type)
+* 4.1. [Number and proportion by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#41-analyze-the-number-and-proportion-by-user-type)
+* 4.2. [Number and proportion by bike type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#42-caculate-the-number-and-proportion-by-bike-type)
+* 4.3. [Average of ride length by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#43-analyze-the-average-of-ride-length-by-user-type)
+* 4.4. [Distribution of ride length by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#44-analyze-the-distribution-of-ride-length-by-user-type)
+* 4.5. [Distribution of stations by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#45-analyze-the-distribution-of-stations-by-user-type)
 * 4.6. [Export data for visulization](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#46-Export-data-for-visulization)
 ### 4.1 Analyze the number and proportion by user type
 ```sql
