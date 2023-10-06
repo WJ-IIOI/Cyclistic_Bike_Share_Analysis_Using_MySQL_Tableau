@@ -40,7 +40,6 @@ Design marketing strategies aimed at converting Cyclistic’s casual riders into
 There are three questions that will guide this future marketing program. 
 1. **How do annual members and casual riders use Cyclistic bikes differently?**
 2. **Why would casual riders buy Cyclistic annual memberships?**
-3. **How can Cyclistic use digital media to influence casual riders to become members?**
 
 By looking at the data, we will be able to first get a broad sense of certain patterns that are occurring in the two different groups. Understanding the differences will provide more accurate customer profiles for each group. These insights will help the marketing analyst team design high quality targeted marketing for converting casual riders into members. For the executive team, these insights will help Cyclistic maximize the number of annual members and will fuel future growth for the company.
 
@@ -792,7 +791,6 @@ ORDER BY 2 , 1
 > **Key insights:**
 * Most member ride length < 20 min 
 * Most casual 
-*
 
 ### 4.5 Analyze the distribution of stations by user type
 * Calculate the number rides of each station by all users
@@ -985,6 +983,10 @@ LIMIT 10
 
 ![Alt Text](C:\Users\linji\OneDrive\Desktop)
 
+> **Key insights:**
+* 123
+* 345
+
 ### 4.6 Export data for visulization
 ```sql
 -- Export data to CSV file fast with command lines 
@@ -1018,8 +1020,29 @@ LINES TERMINATED BY ''
 
 
 ## **STEP 6 ACT – Conclusions from the analysis**
+After above all steps, we can summarize conclusions from the analysis and provide the recommendations for stakeholders to make strategic decisions.
+### 6.1 Summary of key insights
+Identify trends in how annual members and casual riders use Cyclistic bikes differently:
 
-## 6.1 Futher thinkings
+Differences  | Member | Casual
+:---: | --- | ---
+**% of Rides** | 59.67% | 40.33%
+**Days of week** | more workdays | more weekends
+**Hours of day** | 2 peaks, 7AM - 9AM, 4PM - 7PM | 1 peak, 4PM - 6PM, increase consistently then decrease
+**AVG ride length** | 12.7 min | 24.1 min
+**Distribution of ride length** | ------ | ------
+**Distribution of start & end station** | trips close to residential, educational and most commercial areas | trips near parks, museums, along the coast and other recreational areas
+
+### 6.2 Solving business task
+Design marketing strategies aimed at converting casual riders to members:
+  
+* After above all steps, we can summarize conclusions from the analysis and provide the recommendations
+* After above all steps, we can summarize conclusions from the analysis and provide the recommendations
+* After above all steps, we can summarize conclusions from the analysis and provide the recommendations
+* After above all steps, we can summarize conclusions from the analysis and provide the recommendations
+* After above all steps, we can summarize conclusions from the analysis and provide the recommendations
+
+### 6.3 Futher thinkings
 * More bikes?
 * More stations?
 
