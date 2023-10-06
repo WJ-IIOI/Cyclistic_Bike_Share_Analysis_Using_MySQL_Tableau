@@ -667,6 +667,7 @@ FROM trip_2022_clean
 GROUP BY 1
 ;
 ```
+
 ![Alt Text](C:\Users\linji\OneDrive\Desktop)
 
 ```sql
@@ -680,6 +681,7 @@ FROM trip_2022_clean
 GROUP BY 1 , 2
 ;
 ```
+
 ![Alt Text](C:\Users\linji\OneDrive\Desktop)
 
 ```sql
@@ -694,6 +696,7 @@ GROUP BY 1 , 2
 ORDER BY 1 , 2
 ;
 ```
+
 ![Alt Text](C:\Users\linji\OneDrive\Desktop)
 
 ```sql
@@ -708,6 +711,7 @@ GROUP BY 1 , 2
 ORDER BY 1 , 2
 ;
 ```
+
 ![Alt Text](C:\Users\linji\OneDrive\Desktop)
 
 > **Key insights:**
@@ -727,6 +731,7 @@ GROUP BY 1 , 2
 ORDER BY 3 DESC
 ;
 ```
+
 ![Alt Text](C:\Users\linji\OneDrive\Desktop)
 
 > **Key insights:**
@@ -782,7 +787,6 @@ ORDER BY 2 , 1
 ;
 ```
 
-
 ![Alt Text](C:\Users\linji\OneDrive\Desktop)
 
 > **Key insights:**
@@ -791,10 +795,195 @@ ORDER BY 2 , 1
 *
 
 ### 4.5 Analyze the distribution of stations by user type
+* Calculate the number rides of each station by all users
+```sql
+-- total 1253 different stations
+SELECT 
+    ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) AS top,
+    start_station_name,
+    COUNT(*)
+FROM trip_2022_clean
+GROUP BY 2
+ORDER BY 3 DESC
+-- LIMIT 20
+;
+```
 
+* Calculate the number rides and percentage of top 10 stations by user_type
+```sql
+WITH top_station AS
+(
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) AS top,
+        start_station_name, 
+        COUNT(*) AS count
+    FROM trip_2022_clean
+    GROUP BY 2
+    ORDER BY 3 DESC
+    LIMIT 10
+)
+SELECT
+    t.top,
+    u.start_station_name, 
+    u.user_type,
+    COUNT(*) AS rides,
+    SUM(COUNT(*)) OVER (PARTITION BY u.start_station_name) AS subtotal,
+    COUNT(*) / SUM(COUNT(*)) OVER (PARTITION BY u.start_station_name) AS sub_pct
+FROM trip_2022_clean AS u
+JOIN top_station AS t
+ON u.start_station_name = t.start_station_name
+GROUP BY 2, 3
+ORDER BY 1, 2, 3
+LIMIT 20
+;
+```
 
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
 
+* Compare top 10 start & end stations of total rides
+```sql
+-- the top 10 start and end station by total rides are almost same
+-- only the ranking of some stations are slightly different
+-- but the number of the rides are very close
+WITH end_station AS
+(
+    -- top 10 end stations of total rides
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS e_top,
+        end_station_name,
+        count(*) AS rides
+    FROM trip_2022_clean
+    GROUP BY 2
+    ORDER BY 3 DESC
+)
+SELECT 
+    ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS s_top,
+    s.start_station_name,
+    count(*) AS rides,
+    e.e_top,
+    e.end_station_name,
+    e.rides
+FROM trip_2022_clean AS s
+JOIN end_station AS e
+ON s.start_station_name = e.end_station_name
+GROUP BY 2
+ORDER BY 1
+LIMIT 10
+;
+```
 
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
+
+* Compare top 10 start & end stations by casual users
+```sql
+WITH start_station AS
+(
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS s_casual_top,
+        start_station_name,
+        count(*) AS rides
+    FROM trip_2022_clean
+    WHERE user_type = 'Casual'
+    GROUP BY 2
+    ORDER BY 3 DESC
+),
+end_station AS
+(
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS e_casual_top,
+        end_station_name,
+        count(*) AS rides
+    FROM trip_2022_clean
+    WHERE user_type = 'Casual'
+    GROUP BY 2
+    ORDER BY 3 DESC
+)
+SELECT 
+    s.s_casual_top,
+    s.start_station_name,
+    s.rides,
+    e.e_casual_top,
+    e.end_station_name,
+    e.rides
+FROM start_station AS s
+JOIN end_station AS e
+ON s.s_casual_top = e.e_casual_top
+ORDER BY 1
+LIMIT 20
+;
+```
+
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
+
+* Compare top 10 start stations by user_type 
+```sql
+WITH c_start_stations AS
+(
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS c_top_10,
+        user_type,
+        start_station_name,
+        count(*) AS rides
+    FROM trip_2022_clean
+    WHERE user_type = 'Casual'
+    GROUP BY 2, 3
+    ORDER BY 4 DESC
+),
+m_start_stations AS
+(
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS m_top_10,
+        user_type,
+        start_station_name,
+        count(*) AS rides
+    FROM trip_2022_clean
+    WHERE user_type = 'Member'
+    GROUP BY 2, 3
+    ORDER BY 4 DESC
+)
+SELECT 
+    c.c_top_10,
+    c.user_type,
+    c.start_station_name,
+    c.rides,
+    m.m_top_10,
+    m.user_type,
+    m.start_station_name,
+    m.rides
+FROM c_start_stations AS c
+JOIN m_start_stations AS m
+ON c.c_top_10 = m.m_top_10
+ORDER BY 1
+LIMIT 10
+;
+```
+
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
+
+* Same comparision of top 10 end stations by user_type
+* Find top 10 stations by a specific date time frame
+```sql
+SELECT 
+    ROW_NUMBER() OVER (ORDER BY count(*) DESC) AS top_10,
+    EXTRACT(MONTH FROM started_at) AS month,
+    WEEKDAY(started_at) AS weekday,
+    HOUR(started_at) AS hour,
+    user_type,
+    start_station_name,
+    count(*) AS rides
+FROM trip_2022_clean
+WHERE 
+    user_type = 'Casual'
+    AND EXTRACT(MONTH FROM started_at) = 8 -- 8 = August
+    AND WEEKDAY(started_at)  = 0 -- 0 = Monday
+    AND HOUR(started_at) = 11
+GROUP BY 2, 3, 4, 5, 6
+ORDER BY 7 DESC
+LIMIT 10
+;
+```
+
+![Alt Text](C:\Users\linji\OneDrive\Desktop)
 
 ### 4.6 Export data for visulization
 ```sql
