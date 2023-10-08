@@ -1042,13 +1042,13 @@ Areas of focus  | Recommendations
 **Weekly ride** | Provide membership entertainment packages, such like cinemas, amusement parks, museums, sport events<br /> and restaurant, including discount or other promotional.
 **Hourly ride** | Offer price discounts and benefits during non busy hours to encourage people to use more green travel.
 **Ride length** | More ride, more get, like: membership discount, free time rides or other promotional.
-**Top stations** | Launch ad campaign close to the most popular start/end stations for casual users, as well as social media.
+**Top stations** | Launch ad campaign close to the most popular start & end stations for casual users, as well as social media.
 
 ### 6.3 Additional consider
 * More bikes?
 * More stations?
 
-### Project presentation and contact info
+## Project presentation and contact info
 Thank you for your time to review my project! This project helped me to walk through the data analysis process by using real-world data and business questions from start to end. I'm truly excited and look forward to grow in the field of data analysis.
 
 * Tableau Dashboard: [Bike-Share Analysis](https://public.tableau.com/app/profile/jia.wang3280/viz/Bike-shareanalysis2022/Overview).
