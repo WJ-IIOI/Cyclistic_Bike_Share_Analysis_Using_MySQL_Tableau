@@ -1025,27 +1025,32 @@ After above all steps, we can summarize conclusions from the analysis and provid
 Identify trends in how annual members and casual riders use Cyclistic bikes differently:
 
 Differences  | Member | Casual
-:---: | --- | ---
-**% of Rides** | 59.67% | 40.33%
-**Days of week** | more workdays | more weekends
-**Hours of day** | 2 peaks, 7AM - 9AM, 4PM - 7PM | 1 peak, 4PM - 6PM, increase consistently then decrease
+:---: | :---: | :---:
+**% of total rides** | 59.67% | 40.33%
+**Weekly rides** | more workdays | more weekends
+**Hourly rides** | 2 peaks in commute hours,<br /> 7AM - 9AM, 4PM - 7PM | 1 peak, 4PM - 6PM,<br /> increase consistently then decrease
 **AVG ride length** | 12.7 min | 24.1 min
-**Distribution of ride length** | ------ | ------
-**Distribution of start & end station** | trips close to residential, educational and most commercial areas | trips near parks, museums, along the coast and other recreational areas
+**Distribution of ride length** | about 83% between 1 min and 20 mins | about 69% between 5 mins and 30 mins
+**Distribution of start & end stations** | trips close to residential,<br /> educational and most commercial areas | trips near parks, museums,<br /> along the coast and other recreational areas
 
 ### 6.2 Solving business task
 Design marketing strategies aimed at converting casual riders to members:
   
-* After above all steps, we can summarize conclusions from the analysis and provide the recommendations
-* After above all steps, we can summarize conclusions from the analysis and provide the recommendations
-* After above all steps, we can summarize conclusions from the analysis and provide the recommendations
-* After above all steps, we can summarize conclusions from the analysis and provide the recommendations
-* After above all steps, we can summarize conclusions from the analysis and provide the recommendations
+Areas of focus  | Recommendations
+:---: | ---
+**Monthly ride** | In the summer months, should launch more activities to enhance the interaction and experience between<br /> users and the brand.<br /> During the off-season, it is necessary to focus on marketing and use discounts, monthly passes, quarterly<br /> passes and other promotional methods to increase the number of casual users.
+**Weekly ride** | Provide membership entertainment packages, such like cinemas, amusement parks, museums, sport events<br /> and restaurant, including discount or other promotional.
+**Hourly ride** | Offer price discounts and benefits during non busy hours to encourage people to use more green travel.
+**Ride length** | More ride, more get, like: membership discount, free time rides or other promotional.
+**Top stations** | Launch ad campaign close to the most popular start/end stations for casual users, as well as social media.
 
-### 6.3 Futher thinkings
+### 6.3 Additional consider
 * More bikes?
 * More stations?
 
-```
-Hello, world!
-```
+### Project presentation and contact info
+Thank you for your time to review my project! This project helped me to walk through the data analysis process by using real-world data and business questions from start to end. I'm truly excited and look forward to grow in the field of data analysis.
+
+* Tableau Dashboard: [Bike-Share Analysis](https://public.tableau.com/app/profile/jia.wang3280/viz/Bike-shareanalysis2022/Overview).
+* Website:
+* Linkedln:
