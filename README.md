@@ -12,12 +12,12 @@ The main tools I used thought this project are **EXCEL**, **MySQL** and **Tablea
 * Data source: [Divvy trip history data](https://divvybikes.com/system-data).
 
 In order to breakdown the tasks, I will follow the steps of the data analysis process down below: 
-1. [Ask](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-1-ask--understand-the-problem)
-2. [Prepare](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-2-prepare--A-description-of-data)
-3. [Process](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-3-process--from-dirty-to-clean)
-4. [Analyze](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-4-analyze--find-the-insights)
-5. [Share](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-5-share---visualizing-findings)
-6. [Act](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#step-6-act--conclusions-from-the-analysis)
+1. [Ask](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-1-ask--understand-the-problem)
+2. [Prepare](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-2-prepare--A-description-of-data)
+3. [Process](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-3-process--from-dirty-to-clean)
+4. [Analyze](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-4-analyze--find-the-insights)
+5. [Share](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-5-share---visualizing-findings)
+6. [Act](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-6-act--conclusions-from-the-analysis)
 
 ### Scenario
 * _I am assuming to be a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago_.
@@ -106,15 +106,15 @@ After above, it's ready for PROCESS.\
 
 
 ## **STEP 3 PROCESS – From dirty to cleaning**
-* 3.1. [Backup data for cleaning](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#31-backup-data-for-cleaning)
-* 3.2. [Remove duplicate data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#32--remove-duplicate-data)
-* 3.3. [Remove irrelevant data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#33-remove-irrelevant-data)
-* 3.4. [Deal with outliers and invalid data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#34-deal-with-outliers-and-invalid-data)
-* 3.5. [Check string values](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#35-check-string-values)
-* 3.6. [Handle missing data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#36-handle-missing-data)
-* 3.7. [Do type conversion](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#37-do-type-conversion)
-* 3.8. [Fix ambiguities and business logic](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#38-fix-ambiguities-and-business-logic)
-* 3.9. [Data-cleaning verification](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#39-Data-cleaning-verification)
+* 3.1. [Backup data for cleaning](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#31-backup-data-for-cleaning)
+* 3.2. [Remove duplicate data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#32--remove-duplicate-data)
+* 3.3. [Remove irrelevant data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#33-remove-irrelevant-data)
+* 3.4. [Deal with outliers and invalid data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#34-deal-with-outliers-and-invalid-data)
+* 3.5. [Check string values](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#35-check-string-values)
+* 3.6. [Handle missing data](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#36-handle-missing-data)
+* 3.7. [Do type conversion](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#37-do-type-conversion)
+* 3.8. [Fix ambiguities and business logic](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#38-fix-ambiguities-and-business-logic)
+* 3.9. [Data-cleaning verification](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#39-Data-cleaning-verification)
 
 ### 3.1 Backup data for cleaning
 ```sql
@@ -649,12 +649,12 @@ Now, the data is clean, accurate, consistent, complete and ready for ANALYSIS.
 ## **STEP 4 ANALYZE – Find the insights**
 At this step, for better answering the business task, I will use MySQL for data analysis, and then use Tableau for visualization.
 I will identify trends in how annual members and casual riders use Cyclistic bikes differently by analyzing the following:
-* 4.1. [Number and proportion by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#41-analyze-the-number-and-proportion-by-user-type)
-* 4.2. [Number and proportion by bike type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#42-caculate-the-number-and-proportion-by-bike-type)
-* 4.3. [Average of ride length by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#43-analyze-the-average-of-ride-length-by-user-type)
-* 4.4. [Distribution of ride length by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#44-analyze-the-distribution-of-ride-length-by-user-type)
-* 4.5. [Distribution of stations by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#45-analyze-the-distribution-of-stations-by-user-type)
-* 4.6. [Export data for visulization](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau/tree/main#46-Export-data-for-visulization)
+* 4.1. [Number and proportion by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#41-analyze-the-number-and-proportion-by-user-type)
+* 4.2. [Number and proportion by bike type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#42-caculate-the-number-and-proportion-by-bike-type)
+* 4.3. [Average of ride length by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#43-analyze-the-average-of-ride-length-by-user-type)
+* 4.4. [Distribution of ride length by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#44-analyze-the-distribution-of-ride-length-by-user-type)
+* 4.5. [Distribution of stations by user type](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#45-analyze-the-distribution-of-stations-by-user-type)
+* 4.6. [Export data for visulization](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#46-Export-data-for-visulization)
 ### 4.1 Analyze the number and proportion by user type
 ```sql
 -- caculate number and proportion by year
