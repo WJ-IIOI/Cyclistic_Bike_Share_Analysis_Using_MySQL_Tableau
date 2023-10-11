@@ -14,7 +14,7 @@ The main tools I used thought this project are **EXCEL**, **MySQL** and **Tablea
 In order to breakdown the tasks, I will follow the steps of the data analysis process down below: 
 1. [Ask](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-1-ask--understand-the-problem)
 2. [Prepare](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-2-prepare--A-description-of-data)
-3. [Process](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-3-process--from-dirty-to-clean)
+3. [Process](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-3-process--from-dirty-to-cleancleaning)
 4. [Analyze](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-4-analyze--find-the-insights)
 5. [Share](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-5-share---visualizing-findings)
 6. [Act](https://github.com/WJ-IIOI/Cyclistic_Bike_Share_Analysis_Using_MySQL_Tableau#step-6-act--conclusions-from-the-analysis)
