@@ -2,10 +2,10 @@
 -- # 5 STEP
 -- Data analysis
 -- ===================================================================
--- 5.1 caculate number and proportion by user type
+-- 5.1 calculate number and proportion by user type
 -- -------------------------------------------------------------------
 
--- caculate number and proportion by year
+-- calculate number and proportion by year
 -- casual 1731089, 40.33%
 -- member 2561457, 59.67%
 SELECT 
@@ -16,7 +16,7 @@ FROM trip_2022_clean
 GROUP BY 1
 ;
 
--- caculate number and proportion by month
+-- calculate number and proportion by month
 SELECT 
     EXTRACT(MONTH FROM started_at) AS month,
     user_type,
@@ -26,7 +26,7 @@ FROM trip_2022_clean
 GROUP BY 1 , 2
 ;
 
--- caculate number and proportion by weekday
+-- calculate number and proportion by weekday
 SELECT 
     WEEKDAY(started_at) AS weekday,
     user_type,
@@ -37,7 +37,7 @@ GROUP BY 1 , 2
 ORDER BY 1 , 2
 ;
 
--- caculate number and proportion by hour
+-- calculate number and proportion by hour
 SELECT 
     HOUR(started_at) AS hour,
     user_type,
@@ -49,10 +49,10 @@ ORDER BY 1 , 2
 ;
 
 -- ===================================================================
--- 5.2 caculate number and proportion by bike type
+-- 5.2 calculate number and proportion by bike type
 -- -------------------------------------------------------------------
 
--- caculate number and proportion by year
+-- calculate number and proportion by year
 SELECT 
     bike_type,
     user_type,
@@ -63,7 +63,7 @@ GROUP BY 1 , 2
 ORDER BY 3 DESC
 ;
 
--- caculate number and proportion by month
+-- calculate number and proportion by month
 SELECT 
     EXTRACT(MONTH FROM started_at) AS month,
     bike_type,
@@ -75,10 +75,10 @@ GROUP BY 1 , 2 , 3
 ;
 
 -- ===================================================================
--- 5.3 caculate average ride length by user type
+-- 5.3 calculate average ride length by user type
 -- -------------------------------------------------------------------
 
--- caculate AVG ride_length of all rides 
+-- calculate AVG ride_length of all rides 
 -- 17.3 mins
 SELECT 
     ROUND(MAX(TIME_TO_SEC(ride_length) / 60), 1) AS max_len,
@@ -87,7 +87,7 @@ SELECT
 FROM trip_2022_clean
 ;
 
--- caculate AVG ride_length of user type by 3 method
+-- calculate AVG ride_length of user type by 3 method
 SELECT 
     user_type,
     ROUND(AVG(TIME_TO_SEC(ride_length) / 60), 1) AS avg_len,
@@ -97,7 +97,7 @@ FROM trip_2022_clean
 GROUP BY 1
 ;
 
--- caculate total users and avg_ride_length of each month
+-- calculate total users and avg_ride_length of each month
 SELECT 
     EXTRACT(MONTH FROM started_at) AS month,
     user_type,
@@ -107,7 +107,7 @@ FROM trip_2022_clean
 GROUP BY 1 , 2
 ;
 
--- caculate total users and avg_ride_length of each weekday
+-- calculate total users and avg_ride_length of each weekday
 SELECT 
     WEEKDAY(started_at) AS weekday,
     user_type,
@@ -118,7 +118,7 @@ GROUP BY 2 , 1
 ORDER BY 1 , 2
 ;
 
--- caculate total users and avg_ride_length of every hour
+-- calculate total users and avg_ride_length of every hour
 SELECT 
     EXTRACT(HOUR FROM started_at) AS hour,
     user_type,
