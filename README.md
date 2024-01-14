@@ -1,6 +1,6 @@
-# Cyclistic Bike-Share Analysis Case Study
+![Alt Text](image/banner.png)
 
-![Alt Text](C:\Users\linji\OneDrive\Desktop)
+# Cyclistic Bike-Share Analysis Case Study
 
 ### Introduction
 Welcome to my capstone project for the Google Data Analytics Certificate course!\
@@ -1044,13 +1044,9 @@ Areas of focus  | Recommendations
 **Ride length** | More ride, more get, like: membership discount, free time rides or other promotional.
 **Top stations** | Launch ad campaign close to the most popular start & end stations for casual users, as well as social media.
 
-### 6.3 Additional consider
-* More bikes?
-* More stations?
-
 ## Project presentation and contact info
 Thank you for your time to review my project! This project helped me to walk through the data analysis process by using real-world data and business questions from start to end. I'm truly excited and look forward to grow in the field of data analysis.
 
 * Tableau Dashboard: [Bike-Share Analysis](https://public.tableau.com/app/profile/jia.wang3280/viz/Bike-shareanalysis2022/Overview).
-* Website:
-* Linkedln:
+* Website: 
+* Linkedln: [Data Analyst @Jia Wang](https://www.linkedin.com/in/jiawang-data-analyst/)
