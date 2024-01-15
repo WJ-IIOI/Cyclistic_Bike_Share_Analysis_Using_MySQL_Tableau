@@ -1047,6 +1047,6 @@ Areas of focus  | Recommendations
 ## Project presentation and contact info
 Thank you for your time to review my project! This project helped me to walk through the data analysis process by using real-world data and business questions from start to end. I'm truly excited and look forward to grow in the field of data analysis.
 
-* Tableau Dashboard: [Bike-Share Analysis](https://public.tableau.com/app/profile/jia.wang3280/viz/Bike-shareanalysis2022/Overview).
-* Website: 
+* Tableau Dashboard: [Bike-Share Analysis Dashboard](https://public.tableau.com/app/profile/jia.wang3280/viz/Bike-shareanalysis2022/Overview).
+* Website: [Jia Wang - Portfolio](https://wj-iioi.github.io/JiaWang-portfolio/)
 * Linkedln: [Data Analyst @Jia Wang](https://www.linkedin.com/in/jiawang-data-analyst/)
